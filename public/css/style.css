@@ -100,6 +100,21 @@ body {
     height: 40px;
 }
 
+.register-form input[name="userRole"]+label,
+.register-form input[name="services"]+label {
+    background-color: transparent;
+    border-color: #1e79f2;
+    color: #1e79f2;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.register-form input[name="userRole"]:checked+label,
+.register-form input[name="services"]:checked+label {
+    background-color: #1e79f2;
+    color: #fff;
+}
+
 
 @media (max-width:500px) {
 

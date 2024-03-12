@@ -8,9 +8,39 @@
                 <form method="POST" action="{{ route('register') }}" class="register-form">
                     <h1 class="text-center mb-4">Sign up free</h1>
                     @csrf
+                    <div class="mb-3">
+                        <label class="mb-2 p-0">{{ __('I am signing up as') }}</label>
+                        <div class="row px-3 vl-radio-fields">
+                            <div class="col-12 col-md-6 px-0">
+                              <input class="btn-check" type="radio" name="userRole" id="userRole1" value="indvidual" checked="checked">
+                              <label class="btn btn-primary m-0 w-100 rounded-0 rounded-md-start" for="userRole1">Individual</label>
+                            </div>
+                            <div class="col-12 col-md-6 px-0">
+                              <input class="btn-check" type="radio" name="userRole" id="userRole2" value="company">
+                              <label class="btn btn-primary m-0 w-100 rounded-0 rounded-md-end" for="userRole2">Company</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="mb-2 p-0">{{ __('Do you sell or provide services online or offline?') }}</label>
+                        <div class="row px-3 vl-radio-fields">
+                            <div class="col-12 col-md-4 px-0">
+                              <input class="btn-check" type="radio" name="services" id="services1" value="indvidual" checked="checked">
+                              <label class="btn btn-primary m-0 w-100 rounded-0 rounded-md-start" for="services1">Online</label>
+                            </div>
+                            <div class="col-12 col-md-4 px-0">
+                              <input class="btn-check" type="radio" name="services" id="services2" value="company">
+                              <label class="btn btn-primary m-0 w-100 rounded-0" for="services2">Offline</label>
+                            </div>
+                            <div class="col-12 col-md-4 px-0">
+                              <input class="btn-check" type="radio" name="services" id="services3" value="company">
+                              <label class="btn btn-primary m-0 w-100 rounded-0 rounded-md-end" for="services3">Online & Offline</label>
+                            </div>
+                        </div>
+                    </div>
                      <div class="mb-3">
-                        <label for="email" class="mb-2 p-0">{{ __('Business line') }}</label>
-                        <select class="form-select">
+                        <label for="businessLine" class="mb-2 p-0">{{ __('Business line') }}</label>
+                        <select id="businessLine" class="form-select">
                             <option value="-1" selected disabled>-</option>
                             <option value="0">Professional &amp; Service Provider</option>
                             <option value="1">Merchant &amp; Seller</option>
