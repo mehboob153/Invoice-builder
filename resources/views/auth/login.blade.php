@@ -33,7 +33,7 @@
                     </div>
 
                     <div class="row mb-3">
-                        <div class="col-12 col-md-6 my-auto">
+                        <div class="col-6 col-md-6 my-auto">
                             <div class="d-flex align-items-center">
                                 <input class="form-control" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                                 <label class="p-0 mb-0 ms-2" for="remember">
@@ -41,7 +41,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-12 col-md-6 my-auto text-md-end">
+                        <div class="col-6 col-md-6 my-auto text-end">
                             @if (Route::has('password.request'))
                                 <a class="btn btn-link p-0 m-0" href="{{ route('password.request') }}">
                                     {{ __('Forgot Your Password?') }}
