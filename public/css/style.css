@@ -63,6 +63,16 @@ body {
     transition: all 180ms linear;
 }
 
+.register-form .form-select {
+    height: 40px;
+    padding: 0 16px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    color: #272b30;
+    font-size: 14px;
+    transition: all 180ms linear;
+}
+
 .login-form .form-control[type='checkbox'],
 .register-form .form-control[type='checkbox'] {
     position: relative;

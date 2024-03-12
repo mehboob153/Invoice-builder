@@ -8,6 +8,17 @@
                 <form method="POST" action="{{ route('register') }}" class="register-form">
                     <h1 class="text-center mb-4">Sign up free</h1>
                     @csrf
+                     <div class="mb-3">
+                        <label for="email" class="mb-2 p-0">{{ __('Business line') }}</label>
+                        <select class="form-select">
+                            <option value="-1" selected disabled>-</option>
+                            <option value="0">Professional &amp; Service Provider</option>
+                            <option value="1">Merchant &amp; Seller</option>
+                            <option value="2">Marketing &amp; Tourism</option>
+                            <option value="3">Other</option>
+                        </select>
+                    </div>
+                    <hr class="mb-3 mt-4" />
                     <div class="row mb-3">
                         <div class="col-12 col-md-6">
                             <label for="fname" class="mb-2 p-0">{{ __('First Name') }}</label>
@@ -50,15 +61,26 @@
                             @enderror
                         </div>
                         <div class="col-12 col-md-6">
-                            <label for="lname" class="mb-2 p-0">{{ __('Confirm Password') }}</label>
+                            <label for="password-confirm" class="mb-2 p-0">{{ __('Confirm Password') }}</label>
                             <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                         </div>
                     </div>
 
-                    <div class="row mb-0">
-                        <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-primary">
-                                {{ __('Register') }}
+                    <div class="row mt-4">
+                         <div class="col-12 mb-4">
+                            <div class="d-flex align-items-center">
+                                <input class="form-control" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                <label class="p-0 mb-0 ms-2" for="remember">
+                                    {{ __('Allow Free Invoice Builder to send occasional updates about additional products and services.') }}
+                                </label>
+                            </div>
+                            <p class="my-2">By creating an account you agree to freeinvoicebuilder.com</p>
+                            <p class="mb-0"><a href="#" class="btn btn-link p-0 m-0">Terms of Service</a> and <a href="#" class="btn btn-link p-0 m-0">Privacy Policy</a></p>
+                        </div>
+
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary w-100">
+                                {{ __('Create account') }}
                             </button>
                         </div>
                     </div>
