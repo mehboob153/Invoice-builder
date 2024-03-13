@@ -97,14 +97,14 @@
                     </div>
 
                     <div class="row mt-4">
-                         <div class="col-12 mb-4">
+                        <div class="col-12 mb-4">
                             <div class="d-flex align-items-center">
-                                <input class="form-control" type="checkbox" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                                <label class="p-0 mb-0 ms-2" for="remember">
+                                <input class="form-check-input" type="checkbox" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                                <label class="form-check-label p-0 mb-0 ms-2" for="remember">
                                     {{ __('Allow Free Invoice Builder to send occasional updates about additional products and services.') }}
                                 </label>
                             </div>
-                            <p class="my-2">By creating an account you agree to freeinvoicebuilder.com</p>
+                            <p class="my-2">By creating an account you agree to invoicebuilder.com</p>
                             <p class="mb-0"><a href="#" class="btn btn-link p-0 m-0">Terms of Service</a> and <a href="#" class="btn btn-link p-0 m-0">Privacy Policy</a></p>
                         </div>
                         <div class="col-12 mb-2">

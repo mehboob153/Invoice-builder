@@ -32,7 +32,7 @@ body {
     background-color: #fff;
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
     padding: 48px;
-    max-height: 800px;
+    max-height: 700px;
     overflow-y: scroll;
 }
 
@@ -137,3 +137,4 @@ body {
         min-width: 280px;
         padding: 20px;
     }
+}
