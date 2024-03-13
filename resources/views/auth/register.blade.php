@@ -107,11 +107,16 @@
                             <p class="my-2">By creating an account you agree to freeinvoicebuilder.com</p>
                             <p class="mb-0"><a href="#" class="btn btn-link p-0 m-0">Terms of Service</a> and <a href="#" class="btn btn-link p-0 m-0">Privacy Policy</a></p>
                         </div>
-
-                        <div class="col-12">
+                        <div class="col-12 mb-2">
                             <button type="submit" class="btn btn-primary w-100">
                                 {{ __('Create account') }}
                             </button>
+                        </div>
+                        <div class="col-12 my-0 text-center">
+                            @if (Route::has('login'))
+                                <p class="mb-0 p-0">Aleardy have an account? <a class="p-0 my-0 ms-3 btn btn-link" href="{{ route('login') }}">{{ __('Sign in here') }}</a>
+                                </p>
+                            @endif
                         </div>
                     </div>
                 </form>   

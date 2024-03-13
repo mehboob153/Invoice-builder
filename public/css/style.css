@@ -3,7 +3,8 @@ body {
 }
 
 .login-screen-wrapper,
-.register-screen-wrapper {
+.register-screen-wrapper,
+.forgot-password-screen-wrapper {
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -14,7 +15,8 @@ body {
 }
 
 .login-screen,
-.register-screen {
+.register-screen,
+.forgot-password-screen {
     align-items: center;
     display: flex;
     height: 100%;
@@ -23,15 +25,19 @@ body {
 
 
 .login-form,
-.register-form {
+.register-form,
+.forgot-password-form {
     min-width: 435px;
     border-radius: 4px;
     background-color: #fff;
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
     padding: 48px;
+    max-height: 800px;
+    overflow-y: scroll;
 }
 
-.login-form {
+.login-form,
+.forgot-password-form {
     max-width: 440px;
     width: 100%;
 }
@@ -41,18 +47,23 @@ body {
 }
 
 .login-form h1,
-.register-form h1 {
+.register-form h1,
+.forgot-password-form h1 {
     font-size: 22px;
     font-weight: normal;
 }
 
 .login-form label,
-.register-form label {
+.register-form label,
+.forgot-password-form labe;
+
+    {
     font-size: 14px;
 }
 
 .login-form .form-control,
-.register-form .form-control {
+.register-form .form-control,
+.forgot-password-form .form-control {
     height: 40px;
     padding: 0 16px;
     background-color: #fff;
@@ -88,14 +99,16 @@ body {
 }
 
 .login-form a.btn-link,
-.register-form a.btn-link {
+.register-form a.btn-link,
+.forgot-password-form a.btn-link {
     font-size: 14px;
     font-weight: 600;
     text-decoration: none;
 }
 
 .login-form .btn-primary,
-.register-form .btn-primary {
+.register-form .btn-primary,
+.forgot-password-form .btn-primary {
     border-radius: 4px;
     height: 40px;
 }
@@ -119,7 +132,8 @@ body {
 @media (max-width:500px) {
 
     .login-form,
-    .register-form {
+    .register-form,
+    .forgot-password-form {
         min-width: 280px;
         padding: 20px;
     }
