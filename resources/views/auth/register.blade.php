@@ -25,27 +25,27 @@
                         <label class="mb-2 p-0">{{ __('Do you sell or provide services online or offline?') }}</label>
                         <div class="row px-3 vl-radio-fields">
                             <div class="col-12 col-md-4 px-0">
-                              <input class="btn-check" type="radio" name="services" id="services1" value="indvidual" checked="checked">
+                              <input class="btn-check" type="radio" name="services" id="services1" value="online" checked="checked">
                               <label class="btn btn-primary m-0 w-100 rounded-0 rounded-md-start" for="services1">Online</label>
                             </div>
                             <div class="col-12 col-md-4 px-0">
-                              <input class="btn-check" type="radio" name="services" id="services2" value="company">
+                              <input class="btn-check" type="radio" name="services" id="services2" value="offline">
                               <label class="btn btn-primary m-0 w-100 rounded-0" for="services2">Offline</label>
                             </div>
                             <div class="col-12 col-md-4 px-0">
-                              <input class="btn-check" type="radio" name="services" id="services3" value="company">
+                              <input class="btn-check" type="radio" name="services" id="services3" value="online_and_offline">
                               <label class="btn btn-primary m-0 w-100 rounded-0 rounded-md-end" for="services3">Online & Offline</label>
                             </div>
                         </div>
                     </div>
                      <div class="mb-3">
                         <label for="businessLine" class="mb-2 p-0">{{ __('Business line') }}</label>
-                        <select id="businessLine" class="form-select">
-                            <option value="-1" selected disabled>-</option>
-                            <option value="0">Professional &amp; Service Provider</option>
-                            <option value="1">Merchant &amp; Seller</option>
-                            <option value="2">Marketing &amp; Tourism</option>
-                            <option value="3">Other</option>
+                        <select id="businessLine" class="form-select" name="business_line">
+                            <option value="" selected disabled>-</option>
+                            <option value="service_provider">Professional &amp; Service Provider</option>
+                            <option value="merchant_seller">Merchant &amp; Seller</option>
+                            <option value="marketing_tourism">Marketing &amp; Tourism</option>
+                            <option value="other">Other</option>
                         </select>
                     </div>
                     <hr class="mb-3 mt-4" />
@@ -99,7 +99,7 @@
                     <div class="row mt-4">
                          <div class="col-12 mb-4">
                             <div class="d-flex align-items-center">
-                                <input class="form-control" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                <input class="form-control" type="checkbox" id="remember" {{ old('remember') ? 'checked' : '' }}>
                                 <label class="p-0 mb-0 ms-2" for="remember">
                                     {{ __('Allow Free Invoice Builder to send occasional updates about additional products and services.') }}
                                 </label>
@@ -119,7 +119,7 @@
                             @endif
                         </div>
                     </div>
-                </form>   
+                </form>
             </div>
         </div>
     </div>
