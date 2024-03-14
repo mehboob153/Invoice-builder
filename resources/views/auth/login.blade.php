@@ -54,18 +54,13 @@
                         <div class="col-12 my-4">
                             <button type="submit" class="btn btn-primary w-100">
                                 {{ __('Login') }}
-                            </button> 
+                            </button>
                         </div>
                         <div class="col-12 my-0 text-center">
                             @if (Route::has('register'))
                                 <p class="mb-0 p-0">Dont have an account? <a class="p-0 my-0 ms-3 btn btn-link" href="{{ route('register') }}">{{ __('Sign up here') }}</a>
                                 </p>
                             @endif
-                        </div>
-                         <div class="col-12 mt-4">
-                            <button type="button" class="btn btn-primary w-100">
-                                {{ __('Continue as guest') }}
-                            </button> 
                         </div>
                     </div>
                 </form>
