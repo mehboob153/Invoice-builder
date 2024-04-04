@@ -138,3 +138,113 @@ body {
         padding: 20px;
     }
 }
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+
+body {
+    /* overflow: hidden; */
+    overflow-x: hidden;
+    font-family: "lato";
+}
+.aside-bar {
+    background-color: #384259;
+    min-height: 100vh;
+}
+.aside-bar a {
+    font-size: 1rem;
+}
+.aside-bar a:hover {
+    color: #1e79f2 !important;
+}
+.signin-position {
+    position: absolute;
+    bottom: -39rem;
+    left: 0;
+    font-weight: 600;
+}
+.file-input i {
+    margin-right: -10px !important;
+}
+input[type="file"] {
+    display: none;
+}
+.style-input label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border: 2px dashed #5e626a !important
+;
+    padding: 7px 15px;
+    /* transition: all .9s; */
+}
+.style-input label:hover {
+    border: 2px solid #1e79f2 !important;
+    /* transition: all .1s; */
+}
+
+.modal-button {
+    background-color: none !important;
+    /* border:2px dashed; */
+}
+.modal-button:hover {
+    border: solid 1px #1e79f2;
+    background-color: #fff;
+}
+.table-data {
+    /* border: none; */
+    border-color: #5e626a;
+    border-style: 1px dashed !important;
+}
+.table-data:hover {
+    border: solid 1px #1e79f2;
+    background-color: #fff;
+    color: #1e79f2;
+}
+
+.modal-header,
+.modal-footer {
+    border: none !important;
+}
+.modal-body {
+    overflow: hidden !important;
+    overflow-y: scroll !important;
+}
+
+.side-buttons button {
+    /* font-weight: 300; */
+    font-size: 100%;
+}
+.span-style {
+    font-size: 14px;
+    color: #272b30;
+}
+.table > :not(caption) > * > * {
+    border: none;
+}
+.positions {
+    position: relative;
+    left: 0;
+    bottom: 70px;
+}
+
+/* Default styles for all devices */
+
+/* Styles for tablets (landscape) and larger */
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    /* Tablet styles here */
+    .aside-bar {
+        display: none;
+    }
+    .all-contenct {
+        width: 100%;
+    }
+    .side-buttons {
+        width: 50%;
+    }
+}
+
+/* Styles for tablets (portrait) and smaller */
+@media only screen and (max-width: 767px) {
+    /* Mobile styles here */
+}
+
