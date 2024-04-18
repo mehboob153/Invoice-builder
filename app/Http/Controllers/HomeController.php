@@ -25,10 +25,31 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function invoiceDetails()
     {
         return view('home');
     }
+
+    public function accountSettings()
+    {
+        return view('account-settings');
+    }
+
+    public function invoices()
+    {
+        return view('invoices');
+    }
+
+    public function clients()
+    {
+        return view('clients');
+    }
+
+    public function addClient()
+    {
+        return view('add-client');
+    }
+
 
     public function storeUserInfo(Request $request)
     {
@@ -51,14 +72,14 @@ class HomeController extends Controller
     public function storeRecipient(Request $request)
     {
         $validatedData = $request->validate([
-            'company_name'       => 'required',
-            'company_reg_number' => 'required',
-            'vat_number'         => 'required',
-            'attention_to'       => 'required',
-            'address'            => 'required',
-            'phone_number'       => 'required',
-            'contact_person'     => 'required',
-            'email'              => 'email',
+            'company_name' => 'required',
+            'company_reg_number'     => 'required',
+            'vat_number'             => 'required',
+            'attention_to'           => 'required',
+            'address'      => 'required',
+            'phone_number' => 'required',
+            'contact_person'         => 'required',
+            'email'          => 'required|email',
 
         ]);
 

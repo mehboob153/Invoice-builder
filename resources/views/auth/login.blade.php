@@ -62,6 +62,13 @@
                                 </p>
                             @endif
                         </div>
+
+                        <div class="col-12 my-4">
+                            <a class="btn btn-primary w-100" href="/invoice-builder">
+                                <i class="fas fa-file"></i>
+                                {{ __('Continue as guest') }}
+                            </a>
+                        </div>
                     </div>
                 </form>
             </div>

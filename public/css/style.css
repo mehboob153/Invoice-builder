@@ -240,11 +240,19 @@ input[type="file"] {
     }
     .side-buttons {
         width: 50%;
-    }
+    }s
 }
 
 /* Styles for tablets (portrait) and smaller */
 @media only screen and (max-width: 767px) {
     /* Mobile styles here */
+}
+
+.nav-link.underline-on-hover:hover::after {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: white;
 }
 

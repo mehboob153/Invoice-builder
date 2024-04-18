@@ -1,8 +1,43 @@
-@extends('base')
-@section('content')
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Builder</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet"/>
 
-<div class="col-lg-10 mx-auto all-contenct">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+</head>
+<body>
+
+<div class="container-fluid">
+    <input class="form-control" id="user_id" value="1" type="hidden" name="user_id"/>
+    <div class="row" style="background-color: #f6f5f9;">
+        <div class="col-lg-2 aside-bar position-fixed">
+            <nav class="navbar mt-5 ps-3">
+                <div class="nav-item">
+                    <a class="navbar-brand nav-link text-white" href="#">
+                        <i class="fa-solid fa-credit-card fs-5 me-2"></i>International payments
+                    </a>
+                </div>
+                <div class="nav-itempt-3">
+                    <a class="navbar-brand nav-link  text-white" href="#">
+                        <i class="fa-solid fa-envelope fs-5 me-2"></i> Contact us
+                    </a>
+                </div>
+                <div class="nav-itempt-3 ps-3 signin-position">
+                    <a class="navbar-brand nav-link text-white" href="#">
+                        <i class="fa-solid fa-sign-in fs-5 me-2"></i>Login
+                    </a>
+                </div>
+            </nav>
+        </div>
+        <div class="col-lg-10 mx-auto all-contenct">
 
             <div class="container">
                 <div class="row" style="margin-left: 220px;">
@@ -123,7 +158,7 @@
                                             <td><input class="form-control" type="text" id="quantity"></td>
                                             <td><input class="form-control" type="text" id="unit_price"></td>
                                             <td>
-                                                <select class="form-select" style="width:150px" id="tax">
+                                                <select class="form-select mx-3" id="tax">
                                                     <option selected>Non Tax</option>
                                                     <option value="1">One</option>
                                                     <option value="2">Two</option>
@@ -134,10 +169,8 @@
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td colspan="4">
+                                            <td colspan="3">
                                                 <textarea placeholder="Description" class="form-control" id="description" rows=""></textarea>
-                                            </td>
-                                            <td style="align-content: center;">
                                                 <i class="fas fa-check fs-5 text-primary me-2 tick-icon"></i>
                                                 <i class="fas fa-trash-alt fs-5 text-primary delete-icon"></i>
                                             </td>
@@ -253,6 +286,12 @@
             </div>
 
         </div>
+
+    </div>
+</div>
+
+</div>
+</div>
 </div>
 
 
@@ -386,11 +425,12 @@
                             Set Sender Data
                         </button>
                     </div>
-                </form>
+
             </div>
         </div>
     </div>
 </div>
+</form>
 <!--To Recipient modal-->
 <div class="modal fade" id="toRecipientModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="max-width: 700px; height: 700px;">
@@ -736,8 +776,11 @@
 
 
 
+
+
     });
 
 </script>
+</body>
 
-@endsection
+</html>

@@ -17,5 +17,6 @@ class RecipientInformations extends Model
         'address',
         'phone_number',
         'contact_person',
+        'email',
     ];
 }
