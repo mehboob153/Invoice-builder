@@ -14,7 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect('/login');
+    if (Auth::check()) {
+        return redirect()->route('invoices');
+    } else {
+        return redirect('/login');
+    }
 });
 
 Auth::routes();
@@ -31,17 +35,30 @@ Route::post('/save-invoice-detail', [App\Http\Controllers\InvoiceController::cla
 
 Route::post('/download-invoice', [App\Http\Controllers\InvoiceController::class,'downloadInvoice'])->name('download_invoice');
 
-Route::get('/invoice-builder', [App\Http\Controllers\Controller::class, 'guestPage'])->name('guest_page');
-
 Route::get('/account-settings', [App\Http\Controllers\HomeController::class, 'accountSettings'])->name('account_settings');
 
-Route::get('/InvoiceBuilder/Invoices', [App\Http\Controllers\HomeController::class, 'invoices'])->name('invoices');
+Route::get('/invoice-builder/invoices', [App\Http\Controllers\HomeController::class, 'invoices'])->name('invoices');
 
-Route::get('/InvoiceBuilder/InvoiceDetails', [App\Http\Controllers\HomeController::class, 'invoiceDetails'])->name('invoice-details');
+Route::get('/invoice-builder/invoice-details', [App\Http\Controllers\InvoiceController::class, 'invoiceDetails'])->name('invoice-details');
 
-Route::get('/InvoiceBuilder/Clients', [App\Http\Controllers\HomeController::class, 'clients'])->name('clients');
+Route::get('/invoice-builder/clients', [App\Http\Controllers\HomeController::class, 'clients'])->name('clients');
 
-Route::get('/InvoiceBuilder/addClient', [App\Http\Controllers\HomeController::class, 'addClient'])->name('add-client');
+Route::get('/invoice-builder/add-client', [App\Http\Controllers\HomeController::class, 'addClient'])->name('add-client');
+
+Route::post('/duplicate-invoice/{id}', [App\Http\Controllers\InvoiceController::class, 'duplicateInvoice'])->name('duplicate_invoice');
+
+Route::delete('/delete-invoice/{id}', [App\Http\Controllers\InvoiceController::class, 'deleteInvoice'])->name('delete_invoice');
+
+Route::post('/update-user-information', [App\Http\Controllers\InvoiceController::class, 'updateUserInfo'])->name('update_user_information');
+
+Route::get('/view-client-invoices/{id}', [App\Http\Controllers\HomeController::class, 'viewClientInvoices'])->name('view-client-invoices');
+
+Route::delete('/delete-client/{id}', [App\Http\Controllers\InvoiceController::class, 'deleteClient'])->name('delete_client');
+
+
+
+
+
 
 
 

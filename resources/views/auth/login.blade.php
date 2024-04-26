@@ -64,7 +64,7 @@
                         </div>
 
                         <div class="col-12 my-4">
-                            <a class="btn btn-primary w-100" href="/invoice-builder">
+                            <a class="btn btn-primary w-100" href="/invoice-builder/invoice-details">
                                 <i class="fas fa-file"></i>
                                 {{ __('Continue as guest') }}
                             </a>

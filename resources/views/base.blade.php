@@ -15,45 +15,64 @@
 </head>
 <body>
 
-<div class="container-fluid">
-    <input class="form-control" id="user_id" value="1" type="hidden" name="user_id"/>
-    <div class="row" style="background-color: #f6f5f9;">
+<div class="container-fluid invoice">
+
+    <div class="row pb-5" style="background-color: #f6f5f9; width: 100vw;min-height:100vh;">
         <div class="col-lg-2 aside-bar position-fixed">
-            <nav class="navbar mt-5 ps-3">
+            <nav class="navbar mt-4 ps-3 d-block" style="height: 95vh;">
                 @auth
-                <div class="nav-itempt-3">
-                    <a class="navbar-brand nav-link  text-white" href="/InvoiceBuilder/Invoices">
-                        <i class="fa-solid fas fa-file-alt fs-5 me-2"></i> Invoices
+                <div class="nav-item">
+                    <a class="navbar-brand nav-link text-white" href="/invoice-builder/invoices">
+                        <i class="fa-solid fa-file-text fs-5  me-2"></i>Invoice
                     </a>
                 </div>
-                <div class="nav-itempt-3">
-                    <a class="navbar-brand nav-link  text-white" href="/InvoiceBuilder/Clients">
-                        <i class="fa-solid fas fa-users fs-6 me-2"></i> Clients
+                <div class="nav-item pt-3">
+                    <a class="navbar-brand nav-link text-white" href="/invoice-builder/clients">
+                        <i class="fa-solid fa-users fs-5  me-2"></i>Clients
                     </a>
                 </div>
-                <div class="nav-itempt-3">
-                    <a class="navbar-brand nav-link  text-white underline-on-hover" href="/account-settings">
-                        <i class="fa-solid fas fa-cog fs-6 me-2"></i> My settings
+                <div class="nav-item py-3">
+                    <a class="navbar-brand nav-link text-white" href="/account-settings">
+                        <i class="fa-solid fa-cog fs-5 me-2"></i>My Settings
                     </a>
                 </div>
+
+                <hr class="text-white">
                 @endauth
-                <div class="nav-itempt-3">
-                    <a class="navbar-brand nav-link  text-white" href="#">
+                <div class="nav-item pt-3">
+                    <a class="navbar-brand nav-link  text-white" href="mailto:mian.hamza8880@gmail.com">
                         <i class="fa-solid fa-envelope fs-5 me-2"></i> Contact us
                     </a>
                 </div>
-                <div class="nav-itempt-3 ps-3 signin-position">
-                    <a class="navbar-brand nav-link text-white" href="/login">
-                        <i class="fa-solid fa-sign-in fs-5 me-2"></i>Login
-                    </a>
+                    @if(auth()->check())
+                <div class="nav-itempt-3 ps-3 logout-position d-flex align-items-center my-auto">
+
+                        <img src="{{ asset('images/1713199857.jpg') }}" alt="" style="margin-right: 10px;">
+                    <span class="text-white">hamza</span>
+                    <form id="logout-form" action="/logout" method="POST">
+                        @csrf
+                        <button type="submit" class="navbar-brand nav-link text-white">
+                            <i class="fa-solid fa-sign-in fs-6" style="margin-left: 5rem;"></i>
+                            <span class="logout-text">Logout</span>
+                        </button>
+                    </form>
+
                 </div>
+                    @else
+                        <div class="nav-itempt-3 ps-3 logout-position d-flex  justify-content-start my-auto">
+                            <a class="navbar-brand nav-link text-white" href="/login">
+                                <i class="fa-solid fa-sign-in fs-6"></i>
+                                Login
+                                 </a>
+
+                        </div>
+                    @endif
+
             </nav>
         </div>
         @yield('content')
-</div>
 
-</div>
-</div>
+    </div>
 </div>
 
 

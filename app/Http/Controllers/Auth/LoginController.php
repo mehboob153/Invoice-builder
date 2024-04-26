@@ -25,7 +25,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/invoice-builder/invoices';
 
     /**
      * Create a new controller instance.

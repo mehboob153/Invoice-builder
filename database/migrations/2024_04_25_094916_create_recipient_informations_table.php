@@ -11,18 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_informations', function (Blueprint $table) {
+        Schema::create('recipient_informations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('company_name');
-            $table->string('company_tax_id')->nullable();
+            $table->string('company_reg_number')->nullable();
+            $table->string('vat_number')->nullable();
+            $table->string('attention_to')->nullable();
             $table->string('address')->nullable();
             $table->string('phone_number')->nullable();
+            $table->string('contact_person')->nullable();
             $table->string('email')->unique();
-            $table->longText('bank_details')->nullable();
-            $table->string('website_url')->nullable();
+            $table->string('logo')->nullable();
+            $table->string('country')->nullable();
             $table->timestamps();
-
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
@@ -32,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_informations');
+        Schema::dropIfExists('recipient_informations');
     }
 };

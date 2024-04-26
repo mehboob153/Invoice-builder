@@ -62,24 +62,20 @@
                                         <div class="d-flex mt-3 align-items-center">
                                             <i class="fas fa-building fs-1 me-3"></i>
                                             <div>
-                                                <p class="mb-0" style="font-size: 16px; color: #272b30;">Sender name
-                                                </p>
-                                                <span style="font-size: 14px; color: #6a7178;">Sender contact
-                                                        details</span>
+                                                <p id="sender_name" class="mb-0" style="font-size: 16px; color: #272b30;">Sender name</p>
+                                                <span id="sender_contact_details" style="font-size: 14px; color: #6a7178;">Sender contact details</span>
                                             </div>
                                         </div>
                                     </button>
                                 </div>
                                 <div class="col-lg-6">
                                     <button type="button" class="btn modal-button text-start w-100"
-                                            data-bs-toggle="modal" data-bs-target="#toRecipientModal">To
+                                            data-bs-toggle="modal" @if(auth()->check()) data-bs-target="#toRecipientModalforLoggedIn" @else data-bs-target="#toRecipientModal" @endif>To
                                         <div class="d-flex mt-3 align-items-center">
                                             <i class="fas fa-user fs-1 me-3"></i>
                                             <div>
-                                                <p class="mb-0" style="font-size: 16px; color: #272b30;">Recipient
-                                                    name</p>
-                                                <span style="font-size: 14px; color: #6a7178;">Recipient contact
-                                                        details</span>
+                                                <p id="recipient_name" class="mb-0" style="font-size: 16px; color: #272b30;">Recipient name</p>
+                                                <span id="recipient_contact_details" style="font-size: 14px; color: #6a7178;">Recipient contact details</span>
                                             </div>
                                         </div>
                                     </button>
@@ -100,7 +96,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-12 my-4">
-                                    <button type="button" class="btn btn-light py-3 w-100 mt-3" id="add_new_invoice_btn">
+                                    <button type="button" class="btn btn-light py-3 w-100 mt-3" id="add_new_invoice_btn" >
                                         <i class="fas fa-plus"></i>
                                         </i>Add new invoice item</button>
                                 </div>
@@ -117,11 +113,11 @@
                                             <th scope="col">Subtotal</th>
                                         </tr>
                                         </thead>
-                                        <tbody class="table-group-divider" style="border:none;">
+                                        <tbody class="table-group-divider" style="border:none;" id="calculation">
                                         <tr>
-                                            <td><input class="form-control" type="text" id="name"></td>
-                                            <td><input class="form-control" type="text" id="quantity"></td>
-                                            <td><input class="form-control" type="text" id="unit_price"></td>
+                                            <td><input class="form-control" type="text" id="name" ></td>
+                                            <td><input class="form-control" type="number" id="quantity" ></td>
+                                            <td><input class="form-control" type="number" id="unit_price"></td>
                                             <td>
                                                 <select class="form-select" style="width:150px" id="tax">
                                                     <option selected>Non Tax</option>
@@ -130,8 +126,7 @@
                                                     <option value="3">Three</option>
                                                 </select>
                                             </td>
-                                            <td id="subtotal">0.00</td>
-                                            <td></td>
+                                           <td class="subtotal" id="subtotal">0.00</td>
                                         </tr>
                                         <tr>
                                             <td colspan="4">
@@ -178,8 +173,17 @@
                             <div class="row span-style">
                                 <div class="col-lg-12 pt-2">
                                     <div class="float-end">
-                                        <span class=" pe-3" style="margin-right: 80px;">Tax</span>
+                                        <span class="me-5 pe-3" >Tax</span>
                                         <span class="ms-5 ps-5" id="invoice_tax">$ 0.00</span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row span-style payment_amount_div" style="display:none;">
+                                <div class="col-lg-12 pt-2">
+                                    <div class="float-end">
+                                        <span class="me-5 pe-3">Payments</span>
+                                        <span class="ms-5 ps-5" id="invoice_payment">$ 0.00</span>
 
                                     </div>
                                 </div>
@@ -187,7 +191,7 @@
                             <div class="row span-style">
                                 <div class="col-lg-12 pt-2">
                                     <div class="float-end">
-                                        <span class="pe-3" style="margin-right: 70px;">Total</span>
+                                        <span class="me-5 pe-3" style="margin-right: 70px;">Total</span>
                                         <span class="ms-5 ps-5" id="invoice_total">$ 0.00</span>
                                     </div>
                                 </div>
@@ -354,6 +358,7 @@
                                     <input type="text" class="form-control phone_number" id="phone_number_1" name="phone_number" placeholder="Enter phone number">
                                 </div>
                             </div>
+                            <div id="sender_phone_validation" class="text-danger"></div>
                         </div>
                     </div>
                     <div class="row py-4 ">
@@ -401,11 +406,23 @@
             <div class="modal-body border border-secondary-subtle mx-5 my-4">
                 <form action="" id="recipient_form">
                     @csrf
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label class="d-flex pb-2">Client Logo</label>
+                            <div class="input-group style-input d-block">
+                                <input type="file" class="form-control" id="logo" name="logo">
+                                <label for="logo">
+                                    <i class="fas fa-image fs-4 me-2"></i>
+                                    Choose logo or drop it here
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row pt-4">
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="company_name">Company / Sender name</label>
-                                <input class="form-control" id="company_name" name="company_name" type="text" />
+                                <input class="form-control company_name" id="company_name" name="company_name" type="text" />
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -434,7 +451,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="address">Address</label>
-                                <input class="form-control" id="address" type="text" name="address"/>
+                                <input class="form-control address" id="address" type="text" name="address"/>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -447,13 +464,14 @@
                                     <input type="text" class="form-control phone_number" id="phone_number" name="phone_number" placeholder="Enter phone number">
                                 </div>
                             </div>
+                            <div id="phone_number_validation" class="text-danger"></div>
                         </div>
                     </div>
                     <div class="row py-4 ">
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="email" class="">Email</label>
-                                <input class="form-control" id="email" type="email" name="email" />
+                                <input class="form-control email" id="email" type="email" name="email" />
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -477,6 +495,73 @@
         </div>
     </div>
 </div>
+
+<!-- To Recipient Modal for logged in user -->
+<div class="modal fade" id="toRecipientModalforLoggedIn" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 550px !important;" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Select the client for the invoice</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="max-height: 440px; overflow-y: auto;">
+                <div class="row p-0">
+                    <div class="col-lg-8">
+                        <input type="search" class="form-control" id=""
+                               placeholder="Search by company name, client name or email">
+                    </div>
+                    <div class="col-lg-4 text-end">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#toRecipientModal"><i
+                                class="fa-solid fs-5 fa-plus me-2"></i>Create Client</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    @if ($clients->isEmpty())
+                        <div class="text-center pt-5">
+                            <h6>Nothing to see here yet. Click 'Add Client' above to get started! </h6>
+                        </div>
+                    @else
+                        @foreach($clients as $client)
+                    <div class="col-lg-12 pt-3">
+                        <div class="card" style="max-width: 540px;">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <img src="{{ asset('images/'. $client->logo .'') }}" class="card-img-top ms-3"
+                                         alt="..." style="width: 40px; height: 40px; border-radius: 50%; margin-top: 35px;">
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="card-body">
+                                        <h2 class="card-title">{{ $client->company_name }}</h2>
+                                        <p class="m-0">{{ $client->company_name }}</p>
+                                        <span>{{ $client->email }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mt-5 text-center">
+                                        <form id="deleteClient" action="{{ route('delete_client', $client->id) }}" method="POST" style="display: inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <a href="" id="deleteLink">
+                                                <i id="deleteIcon" class="fa-solid fs-5 fa-trash-can text-danger"></i>
+                                            </a>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                    @endif
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -506,24 +591,38 @@
             $('#payment_amount').toggle();
         });
 
-        $('#sender_save_button').click(function(event) {
-            event.preventDefault();
-            $.ajax({
-                url: '{{ route("store_user_information") }}',
-                type: 'POST',
-                data: $('#sender_form').serialize(),
-            });
-        });
+        {{--$('#sender_save_button').click(function(event) {--}}
+        {{--    event.preventDefault();--}}
+        {{--    $.ajax({--}}
+        {{--        url: '{{ route("store_user_information") }}',--}}
+        {{--        type: 'POST',--}}
+        {{--        data: $('#sender_form').serialize(),--}}
+        {{--    });--}}
+        {{--});--}}
 
-        $('#recipient_save_button').click(function(event) {
-            event.preventDefault();
-            console.log($('#recipient_form').serialize());
-            $.ajax({
-                url: '{{ route("store_recipient") }}',
-                type: 'POST',
-                data: $('#recipient_form').serialize(),
-            });
-        });
+        {{--$('#recipient_save_button').click(function(event) {--}}
+        {{--    event.preventDefault();--}}
+        {{--    var formData = new FormData();--}}
+
+        {{--    formData.append('company_name', $('.company_name').val());--}}
+        {{--    formData.append('company_reg_number', $('#company_reg_number').val());--}}
+        {{--    formData.append('vat_number', $('#vat_number').val());--}}
+        {{--    formData.append('attention_to', $('#attention_to').val());--}}
+        {{--    formData.append('address', $('.address').val());--}}
+        {{--    formData.append('phone_number', $('#phone_number').val());--}}
+        {{--    formData.append('email', $('.email').val());--}}
+        {{--    formData.append('contact_person', $('#contact_person').val());--}}
+        {{--    formData.append('logo', $('#logo')[0].files[0]);--}}
+        {{--    formData.append('_token', '{{ csrf_token() }}');--}}
+
+        {{--    $.ajax({--}}
+        {{--        url: '{{ route("store_recipient") }}',--}}
+        {{--        type: 'POST',--}}
+        {{--        data: formData,--}}
+        {{--        contentType: false, // Set contentType to false--}}
+        {{--        processData: false,--}}
+        {{--    });--}}
+        {{--});--}}
 
             $.ajax({
                 url: 'https://restcountries.com/v3.1/all',
@@ -566,24 +665,106 @@
             });
 
         var RowCloned = false;
-        var counter = 0;
 
         $("#add_new_invoice_btn").click(function () {
             if (!RowCloned) {
                 $("#new_invoice_table").show();
                 RowCloned = true;
             } else {
-                var clonedRow = $("#new_invoice_table tbody tr").clone();
-                $("#new_invoice_table tbody").append(clonedRow);
+
+                var nameValue = $("#name").val().trim();
+                var quantityValue = $("#quantity").val().trim();
+                var unitPriceValue = $("#unit_price").val().trim();
+
+                if (nameValue === "") {
+                    $("#name").addClass("input-error");
+                } else {
+                    $("#name").removeClass("input-error");
+                }
+
+                if (quantityValue === "") {
+                    $("#quantity").addClass("input-error");
+                } else {
+                    $("#quantity").removeClass("input-error");
+                }
+
+                if (unitPriceValue === "") {
+                    $("#unit_price").addClass("input-error");
+                } else {
+                    $("#unit_price").removeClass("input-error");
+                }
+
+
+                if (nameValue !== "" && quantityValue !== "" && unitPriceValue !== "") {
+
+                    var clonedRow = $("#new_invoice_table tbody tr").eq(0).clone();
+
+                    clonedRow.find('input, select').each(function () {
+                        var value = $(this).val();
+                        $(this).replaceWith('<span>' + value + '</span>');
+                    });
+                    var subtotalId = 'subtotal_' + ($("#new_invoice_table tbody tr").length + 1);
+                    clonedRow.find('.subtotal').attr('id', subtotalId);
+
+                    $("#new_invoice_table tbody").before(clonedRow);
+
+                    var clonedSubtotal = parseFloat(quantityValue) * parseFloat(unitPriceValue);
+                    clonedRow.find('.subtotal').text(clonedSubtotal.toFixed(2));
+
+                    $("#new_invoice_table input[type='text']").val("");
+                    $("#new_invoice_table input[type='number']").val("");
+                    $("#new_invoice_table select").val("Non Tax");
+
+                    $("#new_invoice_table textarea").val("");
+                    $("#new_invoice_table tbody tr:not(:last-child) .subtotal").text("0.00");
+                }
             }
-            counter++
         });
+
+        $(document).on('input', '#unit_price', function () {
+            var unitPrice = $(this).val();
+            var quantity = $('#quantity').val();
+            var subtotal = unitPrice * quantity;
+            var currency = $('#currency-select').val();
+
+            $('#subtotal').text(subtotal.toFixed(2));
+            var sum = 0;
+            $('.subtotal').each(function () {
+                var subtotal = parseFloat($(this).text());
+                if (!isNaN(subtotal)) {
+                    sum += subtotal;
+                }
+            });
+
+            $('#invoice_subtotal').text(currency + sum.toFixed(2));
+            $('#invoice_total').text(currency + sum.toFixed(2));
+
+        });
+
+
+        $('#payment_amount').on('change', function() {
+            $('.payment_amount_div').show();
+            var previousPaymentAmount = 0;
+            var paymentAmount = parseFloat($(this).val());
+            console.log(paymentAmount);
+            var difference = paymentAmount - previousPaymentAmount;
+            var total = parseFloat($('#invoice_total').text().replace('$', ''));
+            $('#invoice_payment').text('$ ' + paymentAmount.toFixed(2));
+            $('#invoice_total').text('$ ' + (total - difference).toFixed(2));
+
+                previousPaymentAmount = paymentAmount;
+
+        });
+
+
+
 
         $(document).on('click', '.delete-row', function () {
             $(this).closest('tr').remove();
         });
 
-        $('#save_button').click(function() {
+        $('#save_button').click(function(event) {
+            event.preventDefault();
 
             var template = $('#template_id').val();
             var logo = $('#logo')[0].files[0];
@@ -608,6 +789,34 @@
             formData.append('logo', logo);
             formData.append('invoice_item', invoice_item);
             formData.append('invoice_item_description', invoice_item_description);
+
+
+            $.ajax({
+                url: '{{ route("store_user_information") }}',
+                type: 'POST',
+                data: $('#sender_form').serialize(),
+            });
+
+            var form = new FormData();
+
+            form.append('company_name', $('.company_name').val());
+            form.append('company_reg_number', $('#company_reg_number').val());
+            form.append('vat_number', $('#vat_number').val());
+            form.append('attention_to', $('#attention_to').val());
+            form.append('address', $('.address').val());
+            form.append('phone_number', $('#phone_number').val());
+            form.append('email', $('.email').val());
+            form.append('contact_person', $('#contact_person').val());
+            form.append('logo', $('#logo')[0].files[0]);
+            form.append('_token', '{{ csrf_token() }}');
+
+            $.ajax({
+                url: '{{ route("store_recipient") }}',
+                type: 'POST',
+                data: form,
+                contentType: false, // Set contentType to false
+                processData: false,
+            });
 
             $.ajax({
                 url: '/save-invoice',
@@ -655,17 +864,6 @@
                     console.error(xhr.responseText);
                 }
             });
-        });
-
-        $(document).on('input', '#unit_price', function () {
-            var unitPrice = $(this).val();
-            var quantity = $('#quantity').val();
-            var subtotal = unitPrice * quantity;
-            var currency = $('#currency-select').val();
-            console.log(currency);
-            $('#subtotal').text(subtotal.toFixed(2));
-            $('#invoice_subtotal').text(currency + subtotal.toFixed(2));
-            $('#invoice_total').text(currency + subtotal.toFixed(2));
         });
 
 
@@ -732,6 +930,131 @@
                     window.URL.revokeObjectURL(blobUrl);
                 }
             });
+        });
+
+        $("#sender_save_button").click(function() {
+
+            var companyName = $("#company_name").val();
+            var companyTaxId = $("#company_tax_id").val();
+            var address = $("#address").val();
+            var phoneNumber = $("#phone_number_1").val();
+            var email = $("#email").val();
+            var websiteUrl = $("#website_url").val();
+            var bankDetails = $("#bank_details").val();
+            var isValid = true;
+            $(".form-error").remove();
+
+            if (companyName.trim() === '') {
+                $("#company_name").after('<div class="form-error text-danger">Company / Sender name is required.</div>');
+                isValid = false;
+            }
+
+            if (companyTaxId.trim() === '') {
+                $("#company_tax_id").after('<div class="form-error text-danger">Company / Sender name is required.</div>');
+                isValid = false;
+            }
+
+            if (address.trim() === '') {
+                $("#address").after('<div class="form-error text-danger">Address is required.</div>');
+                isValid = false;
+            }
+
+            if (phoneNumber.trim() === '') {
+                $("#sender_phone_validation").text('Phone number is required.');
+                isValid = false;
+            }
+
+            if (email.trim() === '') {
+                $("#email").after('<div class="form-error text-danger">Email is required.</div>');
+                isValid = false;
+            }
+
+            if (websiteUrl.trim() === '') {
+                $("#website_url").after('<div class="form-error text-danger">Website URL is required.</div>');
+                isValid = false;
+            }
+
+            if (bankDetails.trim() === '') {
+                $("#bank_details").after('<div class="form-error text-danger">Bank Details is required.</div>');
+                isValid = false;
+            }
+
+            if (isValid) {
+            var senderContactDetails = companyTaxId + " | " + address + " | " + phoneNumber + " | " + email + " | " + websiteUrl + " | " + bankDetails;
+            $('#senderModal').modal('hide');
+            $("#sender_name").text(companyName);
+            $("#sender_contact_details").text(senderContactDetails);
+
+            }
+        });
+
+        $("#recipient_save_button").click(function() {
+
+            var companyName = $(".company_name").val();
+            var companyRegNumber = $("#company_reg_number").val();
+            var vatNumber = $("#vat_number").val();
+            var attentionTo = $("#attention_to").val();
+            var address = $(".address").val();
+            var phoneNumber = $("#phone_number").val();
+            var email = $(".email").val();
+            var contactPerson = $("#contact_person").val();
+            var isValid = true;
+            $(".form-error").remove();
+
+            if (companyName.trim() === '') {
+                $(".company_name").after('<div class="form-error text-danger">Company / recipient name is required.</div>');
+                isValid = false;
+            }
+
+            if (companyRegNumber.trim() === '') {
+                $("#company_reg_number").after('<div class="form-error text-danger">Company reg number is required.</div>');
+                isValid = false;
+            }
+
+            if (vatNumber.trim() === '') {
+                $("#vat_number").after('<div class="form-error text-danger">Vat is required.</div>');
+                isValid = false;
+            }
+
+            if (attentionTo.trim() === '') {
+                $("#attention_to").after('<div class="form-error text-danger">This field is required.</div>');
+                isValid = false;
+            }
+
+            if (address.trim() === '') {
+                $(".address").after('<div class="form-error text-danger">Address is required.</div>');
+                isValid = false;
+            }
+
+            if (phoneNumber.trim() === '') {
+                $("#phone_number_validation").text('Phone number is required.');
+                isValid = false;
+            }
+
+            if (email.trim() === '') {
+                $(".email").after('<div class="form-error text-danger">Email is required.</div>');
+                isValid = false;
+            }
+
+            if (contactPerson.trim() === '') {
+                $("#contact_person").after('<div class="form-error text-danger">Contact person is required.</div>');
+                isValid = false;
+            }
+
+
+
+            if (isValid) {
+                var recipientContactDetails = companyRegNumber + " | " + vatNumber + " | " + attentionTo + " | " + address + " | " + phoneNumber + " | " + email + " | " + contactPerson;
+
+                $('#toRecipientModal').modal('hide');
+                $("#recipient_name").text(companyName);
+                $("#recipient_contact_details").text(recipientContactDetails);
+            }
+        });
+
+        $(document).on('click', '#deleteIcon', function(event) {
+            event.preventDefault();
+            $('#deleteClient').submit();
         });
 
 

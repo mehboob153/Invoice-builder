@@ -6,10 +6,23 @@ use App\Models\InvoiceDetail;
 use Illuminate\Http\Request;
 use Dompdf\Dompdf;
 use Illuminate\Support\Facades\View;
+use App\Models\Invoice;
+use App\Models\User;
+use App\Models\UserInformations;
+use App\Models\RecipientInformations;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
+
 
 
 class InvoiceController extends Controller
 {
+
+    public function invoiceDetails()
+    {
+        $clients = RecipientInformations::all();
+        return view('home', ['clients' => $clients]);
+    }
     public function storeInvoice(Request $request)
     {
         $validatedData = $request->validate([
@@ -116,6 +129,60 @@ class InvoiceController extends Controller
 
         return response($pdf->output())->header('Content-Type', 'application/pdf');
     }
+
+
+    public function duplicateInvoice($id)
+    {
+        $originalInvoice = Invoice::findOrFail($id);
+        $newInvoice = $originalInvoice->replicate();
+        $newInvoice->save();
+
+        return response()->json(['success' => true, 'message' => 'Invoice duplicated successfully']);
+
+    }
+
+    public function deleteInvoice($id)
+    {
+        Invoice::findOrFail($id)->delete();
+        return redirect()->back()->with('success', 'Invoice deleted successfully');
+    }
+
+    public function updateUserInfo(Request $request)
+    {
+
+        $getUserId                       = $request->input('user_id');
+        $userInformation                 = UserInformations::where('user_id', $getUserId)->first();
+        $getUser                         = User::find($getUserId);
+        $getUser->first_name             = $request->input('name');
+        $getUser->account_type           = $request->input('account_type');
+        $getUser->email                  = $request->input('email');
+        $userInformation->company_name   = $request->input('name');
+        $userInformation->company_tax_id = $request->input('company_tax_id');
+        $userInformation->address        = $request->input('address');
+        $userInformation->website_url    = $request->input('website_url');
+        $userInformation->bank_details   = $request->input('bank_details');
+        $getUser->save();
+        $userInformation->save();
+        return redirect('/account-settings')->with('success', 'Data edited successfully.');
+    }
+
+    public function deleteClient(Request $request, $id)
+    {
+        $previousUrl = url()->previous();
+        $routeName = Route::getRoutes()->match(app('request')->create($previousUrl))->getName();
+
+        RecipientInformations::findOrFail($id)->delete();
+
+        if ($routeName === 'invoice-details') {
+            return redirect()->route('invoice-details')->with('success', 'Data edited successfully.');
+        } else {
+            return redirect()->route('clients')->with('success', 'Data edited successfully.');
+        }
+
+    }
+
+
+
 
 
 }

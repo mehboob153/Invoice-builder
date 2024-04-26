@@ -256,3 +256,109 @@ input[type="file"] {
     background-color: white;
 }
 
+.table > :not(caption) >  >  {
+/ border: none; /
+padding: 1rem;
+}
+
+tr th {
+    font-size: 14px;
+
+}
+tr th:hover{
+    cursor: pointer;
+    color: #1e79f2 !important;
+}
+table a{
+    text-decoration: none;
+    color: #1e79f2 !important;
+}
+.invoice img{
+    width: 24px;
+    height: 24px;
+    border-radius: 100%;
+}
+.invoice h1{
+    font-size: 32px;
+}
+.invoice h6{
+    font-size: 18px;
+}
+.invoice nav a{
+    font-size: 16px;
+}
+
+.logout-position {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    font-weight: 600;
+}
+
+.logout-text {
+    position: absolute;
+    top: -1.5rem;
+    left: 90%;
+    transform: translateX(-50%);
+    background-color: black;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    font-size: 0.75rem;
+}
+
+.navbar-brand:hover .logout-text {
+    opacity: 1;
+}
+
+#new_invoice_table span{
+    background: transparent;
+}
+
+#new_invoice_table td{
+    height: 40px;
+}
+
+#new_invoice_table tr{
+    border-bottom: 1px solid #ccc;
+}
+
+.input-error {
+    border-color: red;
+}
+
+/* Clients page css start*/
+.clients-content .card h2{
+    font-size: 20px;
+    font-weight: 600;
+}
+.clients-content .card h6{
+    font-size: 14px;
+}
+.clients-content .card span{
+    font-size: 14px;
+    color: #6a7178;
+}
+
+.new-client h1{
+    font-size: 32px;
+    font-weight: 500;
+}
+
+.setting-content h1{
+    font-size: 32px;
+    font-weight: 500;
+}
+.btn-outline {
+    font-size: 14px;
+    font-weight: 600;
+    height: 40px;
+    padding: 0px 15px;
+}
+#changePasswordModal .modal-body{
+    overflow-y: hidden !important;
+}
+
+
