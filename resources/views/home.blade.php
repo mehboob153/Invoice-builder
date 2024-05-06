@@ -1,9 +1,7 @@
 @extends('base')
 @section('content')
 
-
 <div class="col-lg-10 mx-auto all-contenct">
-
             <div class="container">
                 <div class="row" style="margin-left: 220px;">
                     <div class="col-lg-8 col-md-8 col-sm-4">
@@ -24,6 +22,7 @@
                                             Choose logo or drop it here
                                         </label>
                                     </div>
+                                    <img id="logo-preview" src="#" alt="Selected Logo" style="display: none; width: 120px; height: 120px;">
                                 </div>
                                 <div class="col-lg-3">
                                     <select class="form-select" aria-label="Large select example">
@@ -56,18 +55,33 @@
                                 </div>
                             </div>
                             <div class="row pt-3">
-                                <div class="col-lg-6">
-                                    <button type="button" class="btn modal-button text-start w-100 "
-                                            data-bs-toggle="modal" data-bs-target="#senderModal">From
-                                        <div class="d-flex mt-3 align-items-center">
-                                            <i class="fas fa-building fs-1 me-3"></i>
-                                            <div>
-                                                <p id="sender_name" class="mb-0" style="font-size: 16px; color: #272b30;">Sender name</p>
-                                                <span id="sender_contact_details" style="font-size: 14px; color: #6a7178;">Sender contact details</span>
+                                @if(auth()->check())
+                                    <div class="col-lg-6">
+                                        <button type="button" class="btn modal-button text-start w-100 "
+                                                data-bs-toggle="modal" data-bs-target="#senderModal">From
+                                            <div class="d-flex mt-3 align-items-center">
+                                                <i class="fas fa-building fs-1 me-3"></i>
+                                                <div>
+                                                    <p id="sender_name" class="mb-0" style="font-size: 16px; color: #272b30;">{{ $userInformation->company_name }}</p>
+                                                    <span id="sender_contact_details" style="font-size: 14px; color: #6a7178;">{{ $user->email }}</span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </button>
-                                </div>
+                                        </button>
+                                    </div>
+                                @else
+                                    <div class="col-lg-6">
+                                        <button type="button" class="btn modal-button text-start w-100 "
+                                                data-bs-toggle="modal" data-bs-target="#senderModal">From
+                                            <div class="d-flex mt-3 align-items-center">
+                                                <i class="fas fa-building fs-1 me-3"></i>
+                                                <div>
+                                                    <p id="sender_name" class="mb-0" style="font-size: 16px; color: #272b30;">Sender name</p>
+                                                    <span id="sender_contact_details" style="font-size: 14px; color: #6a7178;">Sender contact details</span>
+                                                </div>
+                                            </div>
+                                        </button>
+                                    </div>
+                                @endif
                                 <div class="col-lg-6">
                                     <button type="button" class="btn modal-button text-start w-100"
                                             data-bs-toggle="modal" @if(auth()->check()) data-bs-target="#toRecipientModalforLoggedIn" @else data-bs-target="#toRecipientModal" @endif>To
@@ -119,11 +133,12 @@
                                             <td><input class="form-control" type="number" id="quantity" ></td>
                                             <td><input class="form-control" type="number" id="unit_price"></td>
                                             <td>
-                                                <select class="form-select" style="width:150px" id="tax">
+                                                <select class="form-select mx-3" id="option"
+                                                        aria-label="Default select example">
                                                     <option selected>Non Tax</option>
-                                                    <option value="1">One</option>
-                                                    <option value="2">Two</option>
-                                                    <option value="3">Three</option>
+                                                    <option value="1" data-bs-toggle="modal"
+                                                            data-bs-target="#optionModal" style="font-weight: 600;">
+                                                        + New Tax Rate</option>
                                                 </select>
                                             </td>
                                            <td class="subtotal" id="subtotal">0.00</td>
@@ -218,11 +233,7 @@
                         </div>
 
                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-4 mt-5 btn-css pt-5 side-buttons" <hr class="row">
-                    <button type="button" data-bs-toggle="modal" data-bs-target="#addCustomFieldModal"
-                            class="btn btn-light text-primary border-primary w-100 mt-3"><i class="fas fa-cube"></i>
-                        </i>Add custom field</button>
-
+                    <div class="col-lg-4 col-md-4 col-sm-4 mt-5 btn-css pt-4 side-buttons">
                     <button type="button" class="btn btn-light text-primary border-primary w-100 mt-3" id="company_info_btn">
                         <i class="fas fa-building"></i>
                         </i>Add company info</button>
@@ -259,61 +270,6 @@
         </div>
 </div>
 
-
-<!-- Add Custom Field Modal-->
-<div class="modal fade" id="addCustomFieldModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog " style="max-width: 700px; height: 700px;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Add custom field</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body border border-secondary-subtle m-5 ">
-                <div class="row">
-                    <div class="col-lg-12 my-4">
-                        <label for="exampleFormControlInput1" class="form-label">Display location</label>
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>-</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <label for="exampleFormControlInput1" class="form-label">Name</label>
-                        <input type="email" class="form-control">
-                    </div>
-                </div>
-                <div class="row my-4">
-                    <div class="col-lg-12">
-                        <label for="exampleFormControlInput1" class="form-label">Content</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <button type="button" class="btn btn-primary">
-                            <i class="fas fa-trash-alt"></i>
-                            Delete</button>
-                    </div>
-                </div>
-
-            </div>
-            <div class="modal-footer d-block">
-                <button type="button" class="btn btn-light border-dark me-3" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">
-                    Add Another Field<i class="fas fa-check ms-2"></i>
-                </button>
-                <button type="button" class="btn btn-primary">
-                    Set Custom Field<i class="fas fa-building ms-2"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
 <!-- From sender Modal -->
 <div class="modal fade" id="senderModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="max-width: 700px; height: 700px;">
@@ -330,7 +286,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="company_name">Company / Sender name</label>
-                                <input class="form-control" id="company_name" type="text" name="company_name"/>
+                                <input class="form-control" id="company_name" type="text" value="{{ $userInformation->company_name }}" name="company_name"/>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -352,7 +308,7 @@
                             <div class="form-group">
                                 <label for="phone_number_1">Phone number</label>
                                 <div class="input-group">
-                                    <select class="form-select country_code" aria-label="Default select example">
+                                    <select class="form-select country_code" aria-label="Default select example" name="country">
                                         <option selected disabled>Select Country</option>
                                     </select>
                                     <input type="text" class="form-control phone_number" id="phone_number_1" name="phone_number" placeholder="Enter phone number">
@@ -365,7 +321,7 @@
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="email" class="">Email</label>
-                                <input class="form-control" id="email" type="email" name="email" />
+                                <input class="form-control" id="email" value="{{ $user->email }}" type="email" name="email" />
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -410,13 +366,15 @@
                         <div class="col-lg-6">
                             <label class="d-flex pb-2">Client Logo</label>
                             <div class="input-group style-input d-block">
-                                <input type="file" class="form-control" id="logo" name="logo">
+                                <input type="file" class="form-control" id="logo" name="logo" onchange="previewLogo(event)">
                                 <label for="logo">
                                     <i class="fas fa-image fs-4 me-2"></i>
                                     Choose logo or drop it here
                                 </label>
                             </div>
+                            <img id="logo-preview" src="#" alt="Selected Logo" style="display: none; max-width: 100px; max-height: 100px;">
                         </div>
+
                     </div>
                     <div class="row pt-4">
                         <div class="col-lg-6">
@@ -523,8 +481,8 @@
                         </div>
                     @else
                         @foreach($clients as $client)
-                    <div class="col-lg-12 pt-3">
-                        <div class="card" style="max-width: 540px;">
+                    <div class="col-lg-12 pt-3 ">
+                        <div style="max-width: 540px;" class="card card-link" data-client="{{ json_encode($client) }}">
                             <div class="row">
                                 <div class="col-md-2">
                                     <img src="{{ asset('images/'. $client->logo .'') }}" class="card-img-top ms-3"
@@ -561,10 +519,39 @@
     </div>
 </div>
 
+<!-- tax Modal -->
+<div class="modal fade" id="optionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">New tax rate</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body  border border-secondary-subtle mx-4" style="overflow-y: hidden !important;">
+                <div class="row">
+                    <div class="col-lg-12 pt-1">
+                        <label for="taxName" class="form-label">Name</label>
+                        <input type="text" id="taxName" class="form-control" aria-describedby="passwordHelpBlock">
+                    </div>
+                    <div class="col-lg-12 pt-3 pb-2">
+                        <label for="taxRate" class="form-label">Tax</label>
+                        <input type="number" id="taxRate" class="form-control" aria-describedby="passwordHelpBlock">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer d-block">
+                <button type="button" class="btn btn-light border-dark me-3" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="setTaxBtn"><i class="fa-solid fs-5 fa-check me-2"></i>Set
+                    Tax</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <script>
@@ -624,45 +611,7 @@
         {{--    });--}}
         {{--});--}}
 
-            $.ajax({
-                url: 'https://restcountries.com/v3.1/all',
-                method: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    $('.country_code').empty();
-                    $('.country_code').append($('<option>', {
-                        value: '',
-                        text: 'Select Country'
-                    }));
-                    var countryCodeDigitLimits = {};
 
-                    $.each(response, function(index, country) {
-                        var countryName = country.name.common;
-                        var suffixes = Array.isArray(country.idd.suffixes) ? country.idd.suffixes.join('') : '';
-                        var phoneCode = country.idd.root + suffixes;
-
-                        var digitLimit = 20;
-                        if (country.postalCode && country.postalCode.format) {
-                            digitLimit = parseInt(country.postalCode.format.replace('#', '9'));
-                        }
-
-                        countryCodeDigitLimits[phoneCode] = digitLimit;
-                        $('.country_code').append($('<option>', {
-                            value: phoneCode,
-                            text: countryName + ' (' + phoneCode + ')'
-                        }));
-                    });
-
-                    $('.country_code').change(function() {
-                        var countryCode = $(this).val();
-                        var digitLimit = countryCodeDigitLimits[countryCode];
-                        $(this).closest('.form-group').find('.phone_number').attr('maxlength', digitLimit);
-                    });
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching countries:', error);
-                }
-            });
 
         var RowCloned = false;
 
@@ -737,7 +686,11 @@
             });
 
             $('#invoice_subtotal').text(currency + sum.toFixed(2));
-            $('#invoice_total').text(currency + sum.toFixed(2));
+            var taxRate = parseFloat($('#option').val()) || 0;
+            var taxAmount = (sum * (taxRate / 100));
+            var totalWithTax = sum + taxAmount;
+            $('#invoice_tax').text(currency + taxAmount.toFixed(2));
+            $('#invoice_total').text(currency + totalWithTax.toFixed(2));
 
         });
 
@@ -838,7 +791,7 @@
             var name = $('#name').val();
             var quantity = $('#quantity').val();
             var unit_price = $('#unit_price').val();
-            var tax = $('#tax').val();
+            var tax = $('#option').val();
             var description = $('#description').val();
             var sub_total = $('#subtotal').text();
 
@@ -1057,6 +1010,60 @@
             $('#deleteClient').submit();
         });
 
+        $('.card-link').click(function(e) {
+            e.preventDefault();
+
+            var clientData       = $(this).data('client');
+            var companyName      = clientData.company_name;
+            var companyRegNumber = clientData.company_reg_number;
+            var vatNumber        = clientData.vat_number;
+            var attentionTo      = clientData.attention_to;
+            var address          = clientData.address;
+            var phoneNumber      = clientData.phone_number;
+            var email            = clientData.email;
+            var contactPerson    = clientData.contact_person;
+
+            var recipientContactDetails = companyRegNumber + " | " + vatNumber + " | " + attentionTo + " | " + address + " | " + phoneNumber + " | " + email + " | " + contactPerson;
+
+
+            $("#recipient_name").text(companyName);
+            $("#recipient_contact_details").text(recipientContactDetails);
+            $('.modal').modal('hide');
+        });
+
+        $('#logo').change(function() {
+            var input = this;
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#logo-preview').attr('src', e.target.result).show();
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        });
+
+
+        $('#option').change(function() {
+            let option = $(this).val();
+
+            if (option === '1') {
+                var myModal = new bootstrap.Modal($('#optionModal'));
+                myModal.show();
+            }
+        });
+
+        $('#setTaxBtn').click(function() {
+            var taxName = $('#taxName').val();
+            var taxRate = $('#taxRate').val();
+
+            $('#option').append($('<option>', {
+                value: taxRate,
+                text: taxName + ' (' + taxRate + '%)'
+            }));
+            $('#option').val(taxRate);
+            console.log($('#option').val());
+            $('#optionModal').modal('hide');
+        });
 
 
     });

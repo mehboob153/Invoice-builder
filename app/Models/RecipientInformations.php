@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class RecipientInformations extends Model
 {
@@ -19,4 +20,9 @@ class RecipientInformations extends Model
         'contact_person',
         'email',
     ];
+
+    public function invoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class, 'recipient_id');
+    }
 }

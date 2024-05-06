@@ -1,7 +1,9 @@
 @extends('base')
 @section('content')
-    <form id="userInfoForm" method="POST" action="{{ route('update_user_information') }}">
+
+    <form id="userInfoForm" method="POST" action="{{ route('update_user_information') }}" enctype="multipart/form-data">
         @csrf
+        @method('PUT')
     <input type="hidden" id="user_id" name="user_id" value="{{ $user->id }}">
     <div class="col-lg-10 setting-content">
         <div class="container" style="margin-left: 220px;">
@@ -10,20 +12,38 @@
                     <h1>My settings</h1>
                 </div>
             </div>
+            @if(session('success'))
+                <h1 class="success-message" style="margin-left: 50px;margin-right: 50px;">{{session('success')}}</h1>
+            @endif
             <div class="bg-white shadow pb-4 px-5" style="margin-left: 50px; margin-right: 50px;">
                 <div class="mx-5 mb-4">
-                    <form action="">
                         <div class="row">
                             <div class="col-lg-6 mt-5">
-                                <p>Invoice logo</p>
-                                <span class="text-primary">Upload a logo to be shown on your invoices</span>
-                                <div class="input-group style-input d-block pt-2">
-                                    <input type="file" class="form-control" id="file" accept="image/*">
-                                    <label for="file">
-                                        <i class="fas fa-image fs-4 me-2"></i>
-                                        Chose logo or drop it here
-                                    </label>
-                                </div>
+
+                                <label class="d-flex pb-2">User Image</label>
+                                @if($userInformation->logo)
+                                    <div class="input-group style-input d-block" id="logo-container" style="justify-content: space-between;">
+                                        <img id="logo-preview" src="{{ asset('images/'. $userInformation->logo) }}" alt="Selected Logo" style="width: 120px; height: 120px;border-radius: 0%;">
+                                        <span id="display-logo" style="display:none;">
+                                        <input type="file" class="form-control" id="logo" name="logo" >
+                                        <label for="logo">
+                                            <i class="fas fa-image fs-4 me-2"></i>
+                                            Choose logo or drop it here
+                                        </label>
+                                        </span>
+                                        <a href="#" id="delete-logo">
+                                            <i class="fas fa-trash-alt fs-4"></i>
+                                        </a>
+                                    </div>
+                                @else
+                                    <div class="input-group style-input d-block">
+                                        <input type="file" class="form-control" id="logo" name="logo">
+                                        <label for="logo">
+                                            <i class="fas fa-image fs-4 me-2"></i>
+                                            Choose logo or drop it here
+                                        </label>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <div class="row pt-4">
@@ -48,8 +68,11 @@
                             <div class="col-lg-6 pt-4">
                                 <div class="form-group">
                                     <label class="pb-2">Sender name</label>
-                                    <input class="form-control" id="" type="text"  name="name" value="{{ $user->first_name ?? ''}} {{ $user->last_name ?? ''}}"/>
+                                    <input class="form-control" id="" type="text"  name="name" value="{{ $user->first_name ?? ''}} {{ $user->last_name ?? ''}}" />
                                 </div>
+                                @error('name')
+                                <div class="alert-danger" style="color: red;">{{ $message }}</div>
+                                @enderror
                             </div>
                         </div>
                         <div class="row">
@@ -82,19 +105,30 @@
                                 <div class="form-group">
                                     <label class="pb-2">Email address</label>
                                     <input class="form-control" id="" type="email" name="email" value="{{ $user->email ?? '' }}"/>
+                                    @error('email')
+                                    <div class="alert-danger" style="color: red;">{{ $message }}</div>
+                                    @enderror
                                 </div>
+
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-6 pt-4">
                                 <div class="form-group">
                                     <label class="pb-2">Phone number</label>
-                                    <select class="form-select" aria-label="Default select example" value="{{ $userInformation->phone_number ?? ''}}">
-                                        <option selected>+92</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
+                                    <div class="input-group">
+                                        <select class="form-select country_code" aria-label="Default select example" name="country" >
+                                            <option value="" disabled>Select Country</option>
+                                        </select>
+                                        <input type="text" class="form-control phone_number" id="phone_number_1" name="phone_number" placeholder="Enter phone number" value="{{ $userInformation->phone_number ?? ''}}">
+                                    </div>
+{{--                                    <label class="pb-2">Phone number</label>--}}
+{{--                                    <select class="form-select" aria-label="Default select example" value="{{ $userInformation->phone_number ?? ''}}">--}}
+{{--                                        <option selected>+92</option>--}}
+{{--                                        <option value="1">One</option>--}}
+{{--                                        <option value="2">Two</option>--}}
+{{--                                        <option value="3">Three</option>--}}
+{{--                                    </select>--}}
                                 </div>
                             </div>
                             <div class="col-lg-6 pt-4">
@@ -140,10 +174,32 @@
                                 </div>
                             </div>
                         </div>
-
-                    </form>
                 </div>
             </div>
         </div>
     </form>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+
+        $('#logo-preview').click(function(event) {
+            event.preventDefault();
+            $('#logo').click();
+        });
+
+
+        $('#delete-logo').click(function(event) {
+            event.preventDefault();
+            $('#logo-preview').hide();
+            $('#delete-logo').hide();
+            $('#display-logo').show();
+        });
+    });
+
+    setTimeout(function() {
+        $(".success-message").fadeOut();
+    }, 3000);
+
+</script>
 @endsection

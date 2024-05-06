@@ -20,8 +20,11 @@ class InvoiceController extends Controller
 
     public function invoiceDetails()
     {
-        $clients = RecipientInformations::all();
-        return view('home', ['clients' => $clients]);
+        $user            = User::find(auth()->id());
+        $userInformation = UserInformations::where('user_id', auth()->id())->first();
+        $clients         = RecipientInformations::all();
+
+        return view('home', ['clients' => $clients, 'userInformation' => $userInformation, 'user' => $user]);
     }
     public function storeInvoice(Request $request)
     {
@@ -150,9 +153,23 @@ class InvoiceController extends Controller
     public function updateUserInfo(Request $request)
     {
 
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+        ]);
+
         $getUserId                       = $request->input('user_id');
         $userInformation                 = UserInformations::where('user_id', $getUserId)->first();
         $getUser                         = User::find($getUserId);
+
+        if ($request->hasFile('logo')) {
+            $imageName = time() . '.' . $request->file('logo')->extension();
+            $request->file('logo')->move(public_path('images'), $imageName);
+            $userInformation->logo = $imageName;
+        } else {
+            $userInformation->logo = null;
+        }
+
         $getUser->first_name             = $request->input('name');
         $getUser->account_type           = $request->input('account_type');
         $getUser->email                  = $request->input('email');
@@ -161,9 +178,12 @@ class InvoiceController extends Controller
         $userInformation->address        = $request->input('address');
         $userInformation->website_url    = $request->input('website_url');
         $userInformation->bank_details   = $request->input('bank_details');
+        $userInformation->phone_number   = $request->input('phone_number');
+        $userInformation->country        = $request->input('country');
         $getUser->save();
         $userInformation->save();
-        return redirect('/account-settings')->with('success', 'Data edited successfully.');
+
+        return redirect('/account-settings')->with('success', 'Data edited successfully');
     }
 
     public function deleteClient(Request $request, $id)
@@ -180,6 +200,18 @@ class InvoiceController extends Controller
         }
 
     }
+
+    public function editInvoiceDetails($id)
+    {
+        $getInvoice            = Invoice::find($id);
+        $user                  = User::find($getInvoice->user_id);
+        $userInformation       = UserInformations::where('user_id', $getInvoice->user_id)->first();
+        $getInvoiceDetail      = InvoiceDetail::where('invoice_id', $id)->get();
+        $clients               = RecipientInformations::find($getInvoice->recipient_id);
+        return view('edit-invoices', ['user' => $user, 'userInformation'=> $userInformation, 'clients' => $clients, 'getInvoice' => $getInvoice, 'getInvoiceDetail' => $getInvoiceDetail]);
+    }
+
+
 
 
 

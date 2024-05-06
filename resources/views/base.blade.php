@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invoice Builder</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
           integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
           crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -75,6 +76,50 @@
     </div>
 </div>
 
-
 </body>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$.ajax({
+url: 'https://restcountries.com/v3.1/all',
+method: 'GET',
+dataType: 'json',
+success: function(response) {
+$('.country_code').empty();
+$('.country_code').append($('<option>', {
+    value: '',
+    text: 'Select Country'
+    }));
+    var countryCodeDigitLimits = {};
+
+    $.each(response, function(index, country) {
+    var countryName = country.name.common;
+    var suffixes = Array.isArray(country.idd.suffixes) ? country.idd.suffixes.join('') : '';
+    var phoneCode = country.idd.root + suffixes;
+
+    var digitLimit = 20;
+    if (country.postalCode && country.postalCode.format) {
+    digitLimit = parseInt(country.postalCode.format.replace('#', '9'));
+    }
+
+    countryCodeDigitLimits[phoneCode] = digitLimit;
+    $('.country_code').append($('<option>', {
+    value: phoneCode,
+    text: countryName + ' (' + phoneCode + ')'
+    }));
+    });
+
+    $('.country_code').change(function() {
+    var countryCode = $(this).val();
+    var digitLimit = countryCodeDigitLimits[countryCode];
+    $(this).closest('.form-group').find('.phone_number').attr('maxlength', digitLimit);
+    });
+    },
+    error: function(xhr, status, error) {
+    console.error('Error fetching countries:', error);
+    }
+    });
+
+</script>
 </html>

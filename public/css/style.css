@@ -1,7 +1,11 @@
-body {
-    font-family: 'Lato';
-}
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
 
+body {
+    /* overflow: hidden; */
+    overflow-x: hidden;
+    font-family: "lato";
+}
+/* login page css start */
 .login-screen-wrapper,
 .register-screen-wrapper,
 .forgot-password-screen-wrapper {
@@ -57,7 +61,7 @@ body {
 .register-form label,
 .forgot-password-form label
 
-    {
+{
     font-size: 14px;
 }
 
@@ -138,13 +142,11 @@ body {
         padding: 20px;
     }
 }
-@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
 
-body {
-    /* overflow: hidden; */
-    overflow-x: hidden;
-    font-family: "lato";
-}
+/* login page css end */
+
+/* invoice builder International payments page css start */
+
 .aside-bar {
     background-color: #384259;
     min-height: 100vh;
@@ -172,8 +174,7 @@ input[type="file"] {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    border: 2px dashed #5e626a !important
-;
+    border: 2px dashed #5e626a !important;
     padding: 7px 15px;
     /* transition: all .9s; */
 }
@@ -229,24 +230,106 @@ input[type="file"] {
 
 /* Default styles for all devices */
 
-/* Styles for tablets (landscape) and larger */
+@media only screen and (min-width: 992px) {
+    .col-lg-2 {
+        flex: 0 0 auto;
+        width: 18%;
+    }
+    .responsive {
+        /* margin-left: 0px; */
+    }
+}
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
     /* Tablet styles here */
+    .top-bar {
+        background-color: #384259;
+        display: block;
+    }
     .aside-bar {
+        width: 40% !important;
+        padding: 0;
+        display: none;
+        position: absolute !important;
+        z-index: 2;
+    }
+    .aside-bar .navbar {
+        height: 90vh !important;
+    }
+    .responsive {
+        /* margin-left: 6.7rem !important; */
+        max-width: 800px;
+    }
+
+    .navbar-toggler {
+        /* display: block; */
+    }
+    .form-content {
+        margin-left: 0px !important;
+        width: 100% !important;
+    }
+    .side-buttons .all-buttons {
+        width: 100%;
         display: none;
     }
-    .all-contenct {
-        width: 100%;
+    #show-data {
+        display: block;
     }
-    .side-buttons {
-        width: 50%;
-    }s
+    .currency-invoice {
+        /* display: none; */
+    }
+    .top-template {
+        width: 100% !important;
+    }
 }
 
 /* Styles for tablets (portrait) and smaller */
 @media only screen and (max-width: 767px) {
     /* Mobile styles here */
+    .aside-bar {
+        /* display: none; */
+    }
+    .aside-bar {
+        width: 60% !important;
+        padding: 0;
+        display: none;
+        position: absolute !important;
+        z-index: 2;
+    }
+    .aside-bar .navbar {
+        height: 90vh !important;
+    }
+    .top-bar {
+        background-color: #384259;
+        display: block;
+    }
+    .side-buttons .all-buttons {
+        width: 100%;
+        display: none;
+    }
+    #show-data {
+        display: block;
+    }
+    .form-content {
+        margin-left: 0px !important;
+    }
+    .currency-invoice {
+        flex: none !important;
+    }
+    .style-input {
+        display: block;
+    }
+    .top-template {
+        width: 100% !important;
+    }
+    .table > :not(caption) > * > * {
+        padding: 0px !important;
+    }
 }
+
+/* invoice builder International payments page css start */
+
+
+/* invoice page css start */
 
 .nav-link.underline-on-hover:hover::after {
     content: '';
@@ -256,22 +339,39 @@ input[type="file"] {
     background-color: white;
 }
 
-.table > :not(caption) >  >  {
-/ border: none; /
-padding: 1rem;
+.table > :not(caption) > * > * {
+    /* border: none;  */
+    padding: 1rem;
 }
 
 tr th {
     font-size: 14px;
-
 }
-tr th:hover{
+.invoice tr th:hover {
     cursor: pointer;
     color: #1e79f2 !important;
 }
-table a{
-    text-decoration: none;
+.invoice .table a {
+    text-decoration: none !important;
     color: #1e79f2 !important;
+}
+.invoice .invoice-card a {
+    text-decoration: none !important;
+    color: #1e79f2 !important;
+}
+
+.invoice .card .headings h6{
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.invoice .card-body h6 {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #6a7178;
+}
+.invoice .invoice-card{
+    display: none;
 }
 .invoice img{
     width: 24px;
@@ -329,7 +429,54 @@ table a{
     border-color: red;
 }
 
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    /* Tablet styles here */
+    .invoice-content {
+        margin-left: 0px !important;
+        /* margin-right: 0px !important; */
+    }
+
+    .invoices .ms-5,
+    .mx-5 {
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }
+    .invoice-content th i {
+        /* margin-left: 0px !important; */
+    }
+    .invoice .invoice-card{
+        display: block;
+    }
+    .invoice .invoice-table{
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    /* Mobile styles here */
+    .invoice-content {
+        margin-left: 0px !important;
+    }
+    .invoices .ms-5,
+    .mx-5 {
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }
+    .invoice .invoice-card{
+        display: block;
+    }
+    .invoice .invoice-table{
+        display: none;
+    }
+}
+
+/* invoice page css end */
+
 /* Clients page css start*/
+.clients-content h1 {
+    font-size: 32px;
+    /* font-weight: 300; */
+}
 .clients-content .card h2{
     font-size: 20px;
     font-weight: 600;
@@ -341,16 +488,6 @@ table a{
     font-size: 14px;
     color: #6a7178;
 }
-
-.new-client h1{
-    font-size: 32px;
-    font-weight: 500;
-}
-
-.setting-content h1{
-    font-size: 32px;
-    font-weight: 500;
-}
 .btn-outline {
     font-size: 14px;
     font-weight: 600;
@@ -361,4 +498,208 @@ table a{
     overflow-y: hidden !important;
 }
 
+.invoice-table > tbody > tr:hover > *{
+    background-color: lightgrey!important;
+    cursor:pointer;
+}
 
+.success-message{
+    border-color: #badbcc;
+    background-color: #d1e7dd;
+    color: #0f5132;
+    text-align: center;
+}
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    /* Tablet styles here */
+    .clients-content {
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+        /* margin-right: 0px !important; */
+    }
+    .clients-content .ms-5 {
+        margin-left: 0px !important;
+    }
+}
+
+/* Styles for tablets (portrait) and smaller */
+@media only screen and (max-width: 767px) {
+    /* Mobile styles here */
+    .clients-content {
+        margin-left: 0px !important;
+    }
+    .clients-content .ms-5 {
+        margin-left: 0px !important;
+    }
+    .clients-content #button {
+        display: block !important;
+        width: 100% !important;
+    }
+    #button input {
+        width: 100% !important;
+    }
+    #button .btn {
+        width: 100% !important;
+        margin: 10px 0px !important;
+    }
+}
+
+/* new clients page css start */
+.new-client h1 {
+    font-size: 32px;
+    font-weight: 500;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    /* Tablet styles here */
+    .new-clients {
+        margin-left: 0px !important;
+    }
+    .new-clients h1 {
+        text-align: start;
+    }
+    .new-clients .shadow {
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }
+    .new-clients .shadow {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+}
+
+/* Styles for tablets (portrait) and smaller */
+@media only screen and (max-width: 767px) {
+    /* Mobile styles here */
+    .new-clients h1 {
+        text-align: start;
+    }
+    .new-clients .shadow {
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }
+    .new-clients .shadow {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+}
+/* new clients page css end */
+
+/* edit clients page css start */
+.edit-clients .card-body {
+    padding-left: -20px !important;
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    /* Tablet styles here */
+    .edit-clients {
+        margin-left: 0px !important;
+    }
+    .edit-clients .card .buttons{
+        text-align: start !important;
+    }
+    .edit-clients .card .btn{
+        margin-right: 10px !important;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    /* Mobile styles here */
+    .edit-clients {
+        margin-left: 0px !important;
+    }
+    .edit-clients {
+        padding-left: 0px !important;
+        padding-right: 5px !important;
+    }
+    .edit-clients .card .d-flex {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    .edit-clients .buttons .btn{
+        margin-right: 10px !important;
+        font-size: 10px;
+    }
+    .edit-clients .me-4{
+        margin-bottom: 10px;
+        padding: 6px 16px;
+    }
+}
+/* edit clients page css end */
+
+
+/* clients page css end */
+
+/* Setting page css start */
+.setting-content h1 {
+    font-size: 32px;
+    font-weight: 500;
+}
+.btn-outline {
+    font-size: 14px;
+    font-weight: 600;
+    height: 40px;
+    padding: 0px 15px;
+}
+#changePasswordModal .modal-body {
+    overflow-y: hidden !important;
+}
+.btn-outline-primary {
+    padding-left: 53px;
+    padding-right: 53px;
+}
+
+/* Styles for tablets (landscape) and larger */
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    /* Tablet styles here */
+    .setting-content {
+        margin-left: 0px !important;
+    }
+    #settingForm {
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }
+    .btn-outline-primary {
+        padding-left: 38px;
+        padding-right: 38px;
+    }
+    .setting-content .shadow {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+    .text-class {
+        text-align: start;
+    }
+}
+
+/* Styles for tablets (portrait) and smaller */
+@media only screen and (max-width: 767px) {
+    /* Mobile styles here */
+    .setting-content {
+        margin-left: 0px !important;
+    }
+    #settingForm {
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }
+    .setting-content .shadow {
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+    .btn-outline-primary {
+        padding-left: 38px;
+        padding-right: 38px;
+    }
+    .responsive-button button {
+        width: 100%;
+        margin-left: 0px !important;
+    }
+    .responsive-button .btn-primary {
+        margin: 10px 0px !important;
+    }
+    .text-class {
+        text-align: start;
+    }
+}
+
+/* Setting page css end */

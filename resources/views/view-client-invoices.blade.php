@@ -3,14 +3,23 @@
 
 
     <div class="col-lg-10 clients-content">
+
         <div class="container" style="margin-left: 210px;">
             <div class="row ms-5">
                 <div class="col-lg-12 pt-5">
+                    @if(session('success'))
+                        <h1 class="success-message">{{session('success')}}</h1>
+                    @endif
                     <div class="card mb-3">
                         <div class="row">
                             <div class="col-md-1 pe-0">
-                                <img src="{{ asset('images/'. $client->logo .'') }}" class="card-img-top mt-5 ms-3"
-                                     alt="..." style="width: 40px; height: 40px;">
+                                @if($client->logo)
+                                    <img src="{{ asset('images/'. $client->logo .'') }}" class="card-img-top mt-5 ms-3"
+                                         alt="..." style="width: 40px; height: 40px;">
+                                @else
+                                    <img src="{{ asset('images/1713199857.jpg') }}" class="card-img-top mt-5 ms-3"
+                                         alt="..." style="width: 40px; height: 40px;">
+                                @endif
                             </div>
                             <div class="col-md-8 ps-0">
                                 <div class="card-body ps-0">
@@ -28,8 +37,8 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="mt-5 text-end">
-                                    <button type="button" class="btn btn-primary me-4" data-bs-toggle="modal" data-bs-target="#clientModal"><i
-                                            class="fa-solid fa-pencil me-2"></i>Edit</button>
+                                    <a href="/edit-client/{{$client->id}}" type="button" class="btn btn-primary ms-3"> <i class="fas fa-edit"></i>
+                                        </i>Edit</a>
                                     <form id="deleteForm" action="{{ route('delete_client', ['id' => $client->id]) }}" method="POST" style="display: inline;">
                                         @csrf
                                         @method('DELETE')
@@ -53,7 +62,7 @@
                 </div>
             </div>
             <div class="row ms-5 mt-4 px-3">
-                <table class="table">
+                <table class="table invoice-table">
                     <thead class="border border-1">
                     <tr class="">
                         <th scope="col">Invoice No# <i class="fas ms-1 fa-sort sortable-icon"></i>
@@ -69,18 +78,41 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>0001</td>
-                            <td>Mark</td>
-                            <td>24/04/2024</td>
-                            <td>24/04/2024</td>
-                            <td>$1050</td>
+                    @foreach($invoices as $index => $invoice)
+                        <tr class="invoice-row" data-client="{{$invoice->id}}">
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $invoice->invoice_type }}</td>
+                            <td>{{ $invoice->invoice_date }}</td>
+                            <td>{{ $invoice->due_date }}</td>
+                            <td>{{ $invoice->currency }}{{ $invoice->total_amount }}</td>
                         </tr>
+                    @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
     </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+
+        if ($('.invoice-row').length > 0) {
+            $('.invoice-row').click(function(event) {
+                if (!$(event.target).closest('.no-click').length) {
+                    var clientId = $(this).data('client');
+                    var url      = '{{ route('edit-invoice-details', ':clientId') }}'.replace(':clientId', clientId);
+                    window.location = url;
+                }
+            });
+        }
+
+        setTimeout(function() {
+            $(".success-message").fadeOut();
+        }, 3000);
+
+    });
+</script>
 
 @endsection

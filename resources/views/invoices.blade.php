@@ -1,7 +1,6 @@
 @extends('base')
 @section('content')
 
-
         <div class="col-lg-10 col-12 ms-5">
             <div class="container" style="margin-left: 220px;">
                 <div class="row mx-5">
@@ -18,7 +17,7 @@
                     </div>
                     @else
                     @foreach($invoices->take(4) as $invoice)
-                    <div class="col-lg-3 pt-3">
+                    <div class="col-lg-3 pt-3 invoice-div" data-invoice-id="{{ $invoice->id }}" style="cursor:pointer;">
                         <div class="card w-100">
                             <img src="{{ asset('images/'. $invoice->logo .'') }}" class="card-img-top mt-3 ms-3" alt="..."
                                  style="width: 40px; height: 40px;">
@@ -64,7 +63,7 @@
                     </div>
                 </div>
                 <div class="row mx-5 mt-4">
-                    <table class="table">
+                    <table class="table invoice-table">
                         <thead class="border border-1">
                         <tr class="">
                             <th scope="col">Invoice No# <i class="fas ms-1 fa-sort sortable-icon"></i>
@@ -84,9 +83,9 @@
                         </thead>
                         <tbody>
                         @foreach($invoices as $index => $invoice)
-                        <tr>
+                            <tr class="invoice-row" data-client="{{$invoice->id}}">
                             <th scope="row">{{ $index + 1 }}</th>
-                            <td>Mark</td>
+                            <td>{{ $invoice->invoice_type }}</td>
                             <td>Otto</td>
                             <td>{{ $invoice->invoice_date }}</td>
                             <td>{{ $invoice->due_date }}</td>
@@ -178,6 +177,21 @@ $(document).ready(function() {
         $('.filter-inputs').val('');
         filterData();
     });
+
+    $('.invoice-div').click(function() {
+        var invoiceId = $(this).data('invoiceId');
+        window.location.href = '/invoice-builder/invoice-details/' + invoiceId;
+    });
+
+    if ($('.invoice-row').length > 0) {
+    $('.invoice-row').click(function(event) {
+        if (!$(event.target).closest('.no-click').length) {
+            var clientId = $(this).data('client');
+            var url      = '{{ route('edit-invoice-details', ':clientId') }}'.replace(':clientId', clientId);
+            window.location = url;
+        }
+    });
+    }
 
 
 });

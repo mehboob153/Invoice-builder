@@ -38,13 +38,31 @@ class HomeController extends Controller
 
     public function invoices()
     {
-        $invoices = Invoice::all();
+        $user = auth()->user();
+
+        if ($user && $user->role === 'admin') {
+            $invoices = Invoice::all();
+        } elseif ($user) {
+            $invoices = Invoice::where('user_id', $user->id)->get();
+        } else {
+            return redirect()->route('login');
+        }
+
         return view('invoices', ['invoices' => $invoices]);
     }
 
     public function clients()
     {
-        $clients = RecipientInformations::all();
+        $user = auth()->user();
+
+        if ($user && $user->role === 'admin') {
+            $clients = RecipientInformations::all();
+        } elseif ($user) {
+            $clients = RecipientInformations::where('user_id', $user->id)->get();
+        } else {
+            return redirect()->route('login');
+        }
+
         return view('clients', ['clients' => $clients]);
     }
 
@@ -106,14 +124,64 @@ class HomeController extends Controller
 
         $client->save();
 
-        return redirect('/invoice-builder/clients')->with('success', 'Data edited successfully.');
+        return redirect('/invoice-builder/clients')->with('success', 'Data saved successfully');
     }
 
     public function viewClientInvoices($id)
     {
-        $client = RecipientInformations::find($id);
-        return view('view-client-invoices', ['client' => $client]);
+        $client   = RecipientInformations::find($id);
+        $invoices = $client->invoices()->get();
+        return view('view-client-invoices', ['client' => $client, 'invoices' => $invoices]);
     }
+
+    public function editClient($id)
+    {
+        $client = RecipientInformations::findOrFail($id);
+        return view('edit-client', ['client' => $client]);
+    }
+    public function updateClient($id, Request $request)
+    {
+        $request->validate([
+            'company_name'       => 'required',
+            'company_reg_number' => 'required',
+            'vat_number'         => 'required',
+            'attention_to'       => 'required',
+            'address'            => 'required',
+            'phone_number'       => 'required',
+            'contact_person'     => 'required',
+            'email'              => 'required',
+        ]);
+
+        $client = RecipientInformations::findOrFail($id);
+        $user   = Auth::user();
+
+        if ($request->hasFile('logo')) {
+        $imageName = time() . '.' . $request->file('logo')->extension();
+        $request->file('logo')->move(public_path('images'), $imageName);
+        $client->logo = $imageName;
+        } else {
+            $client->logo = null;;
+        }
+
+        $client->user_id            = $user->id;
+        $client->company_name       = $request->input('company_name');
+        $client->company_reg_number = $request->input('company_reg_number');
+        $client->vat_number         = $request->input('vat_number');
+        $client->attention_to       = $request->input('attention_to');
+        $client->address            = $request->input('address');
+        $client->phone_number       = $request->input('phone_number');
+        $client->contact_person     = $request->input('contact_person');
+        $client->email              = $request->input('email');
+        $client->country            = "pakistan";
+        $client->save();
+
+        return redirect()->route('view-client-invoices', ['id' => $id])->with('success', 'Data edited successfully');
+
+
+    }
+
+
+
 
 
 }

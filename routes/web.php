@@ -49,11 +49,18 @@ Route::post('/duplicate-invoice/{id}', [App\Http\Controllers\InvoiceController::
 
 Route::delete('/delete-invoice/{id}', [App\Http\Controllers\InvoiceController::class, 'deleteInvoice'])->name('delete_invoice');
 
-Route::post('/update-user-information', [App\Http\Controllers\InvoiceController::class, 'updateUserInfo'])->name('update_user_information');
+Route::put('/update-user-information', [App\Http\Controllers\InvoiceController::class, 'updateUserInfo'])->name('update_user_information');
 
 Route::get('/view-client-invoices/{id}', [App\Http\Controllers\HomeController::class, 'viewClientInvoices'])->name('view-client-invoices');
 
 Route::delete('/delete-client/{id}', [App\Http\Controllers\InvoiceController::class, 'deleteClient'])->name('delete_client');
+
+Route::get('/invoice-builder/invoice-details/{id}', [App\Http\Controllers\InvoiceController::class, 'editInvoiceDetails'])->name('edit-invoice-details');
+
+Route::get('/edit-client/{id}', [App\Http\Controllers\HomeController::class, 'editClient'])->name('edit_client');
+
+Route::put('/update-client/{id}', [App\Http\Controllers\HomeController::class, 'updateClient'])->name('update_client');
+
 
 
 

@@ -26,7 +26,7 @@
                 @else
                 @foreach($clients as $client)
                 <div class="col-lg-4 client-div"  data-client-id="{{ $client->id }}">
-                    <div class="card mb-3" style="max-width: 540px;">
+                    <div class="card mb-3" style="max-width: 540px;cursor:pointer;">
                         <div class="row">
                             <div class="col-md-2">
                                 <img src="{{ asset('images/'. $client->logo .'') }}" class="card-img-top mt-5 ms-3"
