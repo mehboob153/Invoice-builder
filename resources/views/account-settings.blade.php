@@ -92,24 +92,18 @@
                         <div class="row">
                             <div class="col-lg-6 pt-4">
                                 <div class="form-group">
-                                    <label class="pb-2">Country</label>
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option selected>Open this select menu</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 pt-4">
-                                <div class="form-group">
                                     <label class="pb-2">Email address</label>
                                     <input class="form-control" id="" type="email" name="email" value="{{ $user->email ?? '' }}"/>
                                     @error('email')
                                     <div class="alert-danger" style="color: red;">{{ $message }}</div>
                                     @enderror
                                 </div>
-
+                            </div>
+                            <div class="col-lg-6 pt-4">
+                                <div class="form-group">
+                                    <label class="pb-2">Web site</label>
+                                    <input class="form-control" id="" type="" name="website_url" value="{{ $userInformation->website_url ?? ''}}"/>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -118,39 +112,27 @@
                                     <label class="pb-2">Phone number</label>
                                     <div class="input-group">
                                         <select class="form-select country_code" aria-label="Default select example" name="country" >
-                                            <option value="" disabled>Select Country</option>
+                                            <option value="{{ $userInformation->country ?? ''}}" disabled>Select Country</option>
                                         </select>
                                         <input type="text" class="form-control phone_number" id="phone_number_1" name="phone_number" placeholder="Enter phone number" value="{{ $userInformation->phone_number ?? ''}}">
                                     </div>
-{{--                                    <label class="pb-2">Phone number</label>--}}
-{{--                                    <select class="form-select" aria-label="Default select example" value="{{ $userInformation->phone_number ?? ''}}">--}}
-{{--                                        <option selected>+92</option>--}}
-{{--                                        <option value="1">One</option>--}}
-{{--                                        <option value="2">Two</option>--}}
-{{--                                        <option value="3">Three</option>--}}
-{{--                                    </select>--}}
                                 </div>
                             </div>
                             <div class="col-lg-6 pt-4">
                                 <div class="form-group">
                                     <label class="">Default Invoice currency</label>
-                                    <select class="form-select" aria-label="Default select example" value="{{ $userInformation->first_name ?? ''}}">
-                                        <option selected>-</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                    <select id="currency-select" class="form-select" name="currency" aria-label="Default select example">
+                                        <option value="$">USD</option>
+                                        <option value="€">EUR</option>
+                                        <option value="₣">Franc</option>
+                                        <option value="د.إ">Dirham</option>
+                                        <option value="PKR">PKR</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-6 pt-4">
-                                <div class="form-group">
-                                    <label class="pb-2">Web site</label>
-                                    <input class="form-control" id="" type="" name="website_url" value="{{ $userInformation->website_url ?? ''}}"/>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 pt-4">
+                            <div class="col-lg-12 pt-4">
                                 <div class="form-group">
                                     <label class="pb-2">Bank account details</label>
                                     <textarea class="form-control" id="" type="number" name="bank_details"/>{{ $userInformation->bank_details ?? '' }}</textarea>
@@ -179,7 +161,57 @@
         </div>
     </form>
 
+<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                <div class="bg-white shadow pb-4">
+                    <div class="modal-header ">
+                        <button type="button" class="btn-close " data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="row ms-2">
+                        <div class="col-lg-12 text-center">
+                            <h2>Change password</h2>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 pt-4">
+                                <label for="inputPassword5" class="form-label">Current Password</label>
+                                <input type="password" id="currentPassword" class="form-control w-100"
+                                       aria-describedby="passwordHelpBlock">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 pt-4">
+                                <label for="inputPassword5" class="form-label">New Password</label>
+                                <input type="password" id="newPassword" class="form-control w-100"
+                                       aria-describedby="passwordHelpBlock">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 pt-4">
+                                <label for="inputPassword5" class="form-label">Confirm Password</label>
+                                <input type="password" id="confirmPassword" class="form-control w-100"
+                                       aria-describedby="passwordHelpBlock">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 pt-4">
+                                <button type="button" class="btn btn-primary w-100" id="changePasswordBtn">Change password</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -195,11 +227,48 @@
             $('#delete-logo').hide();
             $('#display-logo').show();
         });
+
+
+            function changePassword() {
+
+                var currentPassword = $('#currentPassword').val();
+                var newPassword = $('#newPassword').val();
+                var confirmPassword = $('#confirmPassword').val();
+
+                if (newPassword !== confirmPassword) {
+                    alert('New password and confirm password must match');
+                    return;
+                }
+
+            $.ajax({
+                url: '{{ route("change_password") }}',
+                method: 'POST',
+                data: {
+                    current_password: currentPassword,
+                    new_password: newPassword,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    $('#changePasswordModal').modal('hide');
+                },
+            });
+        }
+
+        $('#changePasswordBtn').click(function() {
+            changePassword();
+
+        });
+
+        var selectedCurrency = "{{ $userInformation->currency ?? '' }}";
+        $("#currency-select").val(selectedCurrency);
+
+        setTimeout(function() {
+            $(".success-message").fadeOut();
+        }, 3000);
+
     });
 
-    setTimeout(function() {
-        $(".success-message").fadeOut();
-    }, 3000);
+
 
 </script>
 @endsection

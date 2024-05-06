@@ -61,6 +61,8 @@ Route::get('/edit-client/{id}', [App\Http\Controllers\HomeController::class, 'ed
 
 Route::put('/update-client/{id}', [App\Http\Controllers\HomeController::class, 'updateClient'])->name('update_client');
 
+Route::post('/change-password', [App\Http\Controllers\HomeController::class, 'changePassword'])->name('change_password');
+
 
 
 

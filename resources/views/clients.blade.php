@@ -29,8 +29,13 @@
                     <div class="card mb-3" style="max-width: 540px;cursor:pointer;">
                         <div class="row">
                             <div class="col-md-2">
-                                <img src="{{ asset('images/'. $client->logo .'') }}" class="card-img-top mt-5 ms-3"
-                                     alt="..." style="width: 40px; height: 40px;">
+                                @if($client->logo)
+                                    <img src="{{ asset('images/'. $client->logo .'') }}" class="card-img-top mt-5 ms-3"
+                                         alt="..." style="width: 40px; height: 40px;">
+                                @else
+                                    <img src="{{ asset('images/1713199857.jpg') }}" class="card-img-top mt-5 ms-3"
+                                         alt="..." style="width: 40px; height: 40px;">
+                                @endif
                             </div>
                             <div class="col-md-10">
                                 <div class="card-body">

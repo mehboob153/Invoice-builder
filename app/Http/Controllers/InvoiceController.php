@@ -180,6 +180,7 @@ class InvoiceController extends Controller
         $userInformation->bank_details   = $request->input('bank_details');
         $userInformation->phone_number   = $request->input('phone_number');
         $userInformation->country        = $request->input('country');
+        $userInformation->currency       = $request->input('currency');
         $getUser->save();
         $userInformation->save();
 

@@ -97,6 +97,8 @@ $('.country_code').append($('<option>', {
     var countryName = country.name.common;
     var suffixes = Array.isArray(country.idd.suffixes) ? country.idd.suffixes.join('') : '';
     var phoneCode = country.idd.root + suffixes;
+    var countryCodeText = countryName + ' (' + phoneCode + ')';
+    console.log(phoneCode);
 
     var digitLimit = 20;
     if (country.postalCode && country.postalCode.format) {
@@ -105,13 +107,14 @@ $('.country_code').append($('<option>', {
 
     countryCodeDigitLimits[phoneCode] = digitLimit;
     $('.country_code').append($('<option>', {
-    value: phoneCode,
+    value: countryName + ' (' + phoneCode + ')',
     text: countryName + ' (' + phoneCode + ')'
     }));
     });
 
     $('.country_code').change(function() {
     var countryCode = $(this).val();
+    console.log(countryCode);
     var digitLimit = countryCodeDigitLimits[countryCode];
     $(this).closest('.form-group').find('.phone_number').attr('maxlength', digitLimit);
     });

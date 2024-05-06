@@ -82,7 +82,7 @@
                                         <select class="form-select country_code" aria-label="Default select example" name="country" >
                                             <option value="" disabled>Select Country</option>
                                         </select>
-                                        <input type="text" class="form-control phone_number" id="phone_number_1" name="phone_number" placeholder="Enter phone number" value="{{ $userInformation->phone_number ?? ''}}">
+                                        <input type="text" class="form-control phone_number" id="phone_number_1" name="phone_number" placeholder="Enter phone number" value="{{ $client->phone_number ?? ''}}">
                                     </div>
                                 </div>
                                 @error('phone_number')

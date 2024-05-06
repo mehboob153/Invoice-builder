@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Models\UserInformations;
 use App\Models\RecipientInformations;
@@ -179,6 +180,24 @@ class HomeController extends Controller
 
 
     }
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:8',
+        ]);
+
+        if (!Hash::check($request->current_password, Auth::user()->password)) {
+            return response()->json(['error' => 'Current password is incorrect'], 422);
+        }
+
+        Auth::user()->update(['password' => Hash::make($request->new_password)]);
+
+        return response()->json(['message' => 'Password changed successfully']);
+    }
+
+
 
 
 
