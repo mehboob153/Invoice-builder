@@ -3,15 +3,15 @@
 
 <form id="clientInfo" method="POST" action="{{ route('store_recipient') }}" enctype="multipart/form-data">
     @csrf
-    <div class="col-lg-10 clients-content">
-        <div class="container" style="margin-left: 220px;">
+    <div class="col-lg-10 clients-content ms-lg-5 ms-0">
+        <div class="container ml-220">
             <div class="row">
                 <div class="col-lg-8 pt-5 ms-5">
                     <h1>New Client</h1>
                 </div>
             </div>
 
-            <div class="bg-white shadow pb-4 px-5" style="margin-left: 50px; margin-right: 50px;">
+            <div class="bg-white shadow pb-4 px-5 mx-lg-5 mx-0" style="">
 
                 <div class="mx-5 mb-4">
                         <div class="row">

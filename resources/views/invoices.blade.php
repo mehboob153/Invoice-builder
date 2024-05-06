@@ -1,8 +1,8 @@
 @extends('base')
 @section('content')
 
-        <div class="col-lg-10 col-12 ms-5">
-            <div class="container" style="margin-left: 220px;">
+        <div class="col-lg-10 col-12 ms-lg-5 ms-0">
+            <div class="container ml-220">
                 <div class="row mx-5">
                     <div class=" pt-5 d-flex align-items-center">
                         <h1 class="d-inline ">Recent invoices</h1>

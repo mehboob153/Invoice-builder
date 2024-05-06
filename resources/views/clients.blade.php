@@ -1,8 +1,8 @@
 @extends('base')
 @section('content')
 
-    <div class="col-lg-10 clients-content">
-        <div class="container" style="margin-left: 220px;">
+    <div class="col-lg-10 clients-content ms-lg-5 ms-0">
+        <div class="container ml-220">
             <div class="row ms-5">
                 <div class="col-lg-6 pt-5">
                     <h1>Clients</h1>

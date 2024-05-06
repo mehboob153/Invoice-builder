@@ -5,8 +5,8 @@
         @csrf
         @method('PUT')
     <input type="hidden" id="user_id" name="user_id" value="{{ $user->id }}">
-    <div class="col-lg-10 setting-content">
-        <div class="container" style="margin-left: 220px;">
+    <div class="col-lg-10 setting-content ms-lg-5 ms-0">
+        <div class="container ml-220">
             <div class="row">
                 <div class="col-lg-8 pt-5 ms-5">
                     <h1>My settings</h1>
@@ -15,7 +15,7 @@
             @if(session('success'))
                 <h1 class="success-message" style="margin-left: 50px;margin-right: 50px;">{{session('success')}}</h1>
             @endif
-            <div class="bg-white shadow pb-4 px-5" style="margin-left: 50px; margin-right: 50px;">
+            <div class="bg-white shadow pb-4 px-5 mx-lg-5 mx-0" style="">
                 <div class="mx-5 mb-4">
                         <div class="row">
                             <div class="col-lg-6 mt-5">

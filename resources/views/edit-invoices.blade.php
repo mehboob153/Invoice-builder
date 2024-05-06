@@ -2,10 +2,10 @@
 @section('content')
 
 
-    <div class="col-lg-10 mx-auto all-contenct">
+    <div class="col-lg-10 mx-auto all-contenct px-0">
 
         <div class="container">
-            <div class="row" style="margin-left: 220px;">
+            <div class="row ml-220">
                 <div class="col-lg-8 col-md-8 col-sm-4">
                     <select class="form-select mb-3 w-50 mt-4" aria-label="Large select example" id="template_id">
                         <option selected>Blank template</option>

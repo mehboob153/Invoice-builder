@@ -231,9 +231,14 @@ input[type="file"] {
 /* Default styles for all devices */
 
 @media only screen and (min-width: 992px) {
-    .col-lg-2 {
+    /*.col-lg-2 {
         flex: 0 0 auto;
         width: 18%;
+    }*/
+
+
+    .ml-220{
+        margin-left: 220px;
     }
     .responsive {
         /* margin-left: 0px; */
